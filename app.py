@@ -1,289 +1,307 @@
 import streamlit as st
 
-# ---------- PAGE CONFIG ----------
-st.set_page_config(
-    page_title="Omolola Blessing Lawal | Data Scientist",
-    page_icon="💠",
-    layout="wide",
-)
-
-# ---------- STYLING ----------
-ACCENT = "#0E0E34"
-
-st.markdown(
-    f"""
-    <style>
-        html, body, [class*="css"] {{
-            font-family: 'Lora', serif;
-        }}
-        h1, h2, h3 {{
-            font-family: 'Georgia', serif;
-            letter-spacing: 0.5px;
-        }}
-        .hero {{
-            background-color: {ACCENT};
-            color: white;
-            padding: 3rem 2rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-        }}
-        .hero h1 {{
-            color: white;
-            font-size: 2.4rem;
-            margin-bottom: 0.2rem;
-        }}
-        .hero p {{
-            color: #e0e0f0;
-            font-size: 1.05rem;
-            line-height: 1.6;
-        }}
-        .section-title {{
-            border-bottom: 3px solid {ACCENT};
-            padding-bottom: 0.3rem;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-        }}
-        .skill-pill {{
-            display: inline-block;
-            background-color: #f0f0f5;
-            color: {ACCENT};
-            padding: 0.35rem 0.9rem;
-            margin: 0.2rem;
-            border-radius: 999px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }}
-        .card {{
-            background-color: #fafafc;
-            border: 1px solid #e5e5ec;
-            border-radius: 10px;
-            padding: 1.2rem;
-            margin-bottom: 1rem;
-        }}
-        .card h3 {{
-            margin-bottom: 0.3rem;
-            color: {ACCENT};
-        }}
-        .card .meta {{
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 0.6rem;
-        }}
-        a {{
-            color: {ACCENT};
-            text-decoration: none;
-            font-weight: 600;
-        }}
-        a:hover {{
-            text-decoration: underline;
-        }}
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------- DATA ----------
-LINKEDIN_URL = "https://www.linkedin.com/in/omolola-lawal-2a9a45188"
-GITHUB_URL = "https://github.com/Lolita-codes"
-EMAIL = "your-email@example.com"  # TODO: replace with your real email
-
-SKILLS = [
-    "Python", "Scikit-Learn", "Pandas", "Seaborn", "Matplotlib", "Plotly",
-    "Numpy", "SQL & PostgreSQL", "Tableau", "Langchain", "NLTK", "SpaCy",
-    "BeautifulSoup", "FastAPI", "Git & GitHub",
-]
-
-EXPERIENCE = [
-    {
-        "title": "Informatics Analyst",
-        "meta": "University College Hospital, Ibadan, Nigeria · Nov 2023 – Nov 2024",
-        "points": [
-            "Identified trends and opportunities for improving medication management and safety through data.",
-            "Maintained inventory management software, ensuring seamless integration with pharmacy dispensing and procurement systems.",
-            "Analyzed inventory data to identify usage trends and predict future demand for medications, and maintained accurate records of drug stock levels.",
-        ],
+# ==========================================
+# 1. PORTFOLIO DATA (Education Removed)
+# ==========================================
+PORTFOLIO_DATA = {
+    "name": "Omolola Blessing Lawal",
+    "role": "Data Scientist",
+    "email": "your.email@example.com", 
+    "about": "Hi there! I am a Data Scientist with proven ability in analyzing complex datasets to identify trends, develop models and provide actionable insights that guides strategic development of secure and advanced initiatives. My experience spans data cleaning and transformation, data analysis and visualization, AI and machine learning solutions, web scraping and script automation. I am committed to innovation and collaboration and I believe we can make something remarkable together so let’s connect and make a difference through technology and data!",
+    "contact": {
+        "linkedin": "https://www.linkedin.com/in/omolola-lawal-2a9a45188",
+        "github": "https://github.com/Lolita-codes"
     },
-    {
-        "title": "Data Scientist Intern",
-        "meta": "Stacksuit, Prague, Czech Republic · May 2023 – May 2024",
-        "points": [
-            "Built an AI-powered application leveraging natural language processing, integrating cloud storage and a vector database for file storage and RAG data retrieval.",
-            "Analyzed data and developed machine learning models for user segmentation.",
-            "Carried out sentiment analysis on customers' reviews and feedback.",
-            "Collaborated with the engineering team to understand business objectives and created compelling visualizations to communicate data findings.",
-        ],
-    },
-    {
-        "title": "Software Developer Intern",
-        "meta": "Stacksuit, Prague, Czech Republic · April 2022 – April 2023",
-        "points": [
-            "Maintained code integrity and organization, applying object-oriented design principles.",
-            "Collaborated with the product and engineering team to design and build high-quality, reliable APIs and services.",
-            "Ensured cross-country optimization.",
-            "Debugged, troubleshot, and resolved production issues in a timely fashion.",
-        ],
-    },
-]
-
-PROJECTS = [
-    {
-        "title": "Profitability Analysis",
-        "desc": "Analyzes food order data to uncover insights on profitability, delivery efficiency, payment methods, and discount trends; identifies optimization areas and simulates proposed changes.",
-        "url": "https://github.com/Lolita-codes/delivery_orders_profitability",
-    },
-    {
-        "title": "HR Churn Analysis",
-        "desc": "Analyzes employee attrition trends within a corporate environment to identify factors contributing to employees leaving and predict employee turnover.",
-        "url": "https://github.com/Lolita-codes/hr_data_analysis",
-    },
-    {
-        "title": "Credit Score – Customer Segmentation",
-        "desc": "Segments customers based on standard FICO credit scores derived from multiple financial factors.",
-        "url": "https://github.com/Lolita-codes/credit_score_customer_segmentation",
-    },
-    {
-        "title": "User Segmentation",
-        "desc": "Segments users based on demographic and behavioral features to optimize ad targeting strategies and increase engagement and conversions.",
-        "url": "https://github.com/Lolita-codes/user_segmentation",
-    },
-    {
-        "title": "House Price Prediction",
-        "desc": "Explores trends and factors contributing to house pricing and builds a predictive model that estimates prices from property characteristics.",
-        "url": "https://github.com/Lolita-codes/Price_prediction",
-    },
-    {
-        "title": "Google Playstore Analysis",
-        "desc": "Comprehensive insights into the Android app market — ratings, reviews, category competitiveness, and pricing strategies — to help developers make informed decisions.",
-        "url": "https://github.com/Lolita-codes/Google_Playstore_Apps",
-    },
-    {
-        "title": "US Police Shootings",
-        "desc": "Explores social trends and factors contributing to fatal police use of force in the United States.",
-        "url": "https://github.com/Lolita-codes/US_police_shootings",
-    },
-    {
-        "title": "Flight Deal Finder",
-        "desc": "Tracks specified locations against a price threshold, integrates a flight search API to find deals below the cutoff, and delivers details via email and SMS.",
-        "url": "https://github.com/Lolita-codes/Flight_deal_finder",
-    },
-    {
-        "title": "Sentiment Analysis – Pfizer Vaccine",
-        "desc": "Identifies key sentiment trends, categorizes opinions, and provides insight into how the vaccine is perceived across demographics and platforms.",
-        "url": "https://github.com/Lolita-codes/Sentiment_analysis_Pfizer_vaccine",
-    },
-    {
-        "title": "Price Optimization",
-        "desc": "Uses historical sales data to predict product pricing that maximizes revenue, factoring in category, unit price, freight price, competitor prices, and other attributes.",
-        "url": "https://github.com/Lolita-codes/price_optimization",
-    },
-]
-
-EDUCATION = {
-    "school": "Obafemi Awolowo University, Nigeria",
-    "detail": "Bachelor of Pharmacy — CGPA 4.72/5.00\nBest Graduating Student, Faculty of Pharmacy '23",
+    "skills": [
+        "Python", "Scikit-Learn", "Pandas", 
+        "Seaborn", "Matplotlib", "Plotly",
+        "Numpy", "SQL & PostgreSQL", "Tableau", 
+        "Langchain", "NLTK", "SpaCy",
+        "BeautifulSoup", "FastAPI", "Git & GitHub"
+    ],
+    "experience": [
+        {
+            "title": "Informatics Analyst",
+            "company": "University College Hospital, Ibadan, Nigeria",
+            "date": "Nov 2023 - Nov 2024",
+            "points": [
+                "Identified trends and opportunities for improving medication management and safety through data.",
+                "Maintained inventory management software, ensuring seamless integration with pharmacy dispensing and procurement systems.",
+                "Analyzed inventory data to identify usage trends and predict future demand for medications and maintained accurate records of drug stock levels."
+            ]
+        },
+        {
+            "title": "Data Scientist Intern",
+            "company": "DC Clevertech (Contracted for Stacksuit)",
+            "date": "May 2023 - May 2024",
+            "points": [
+                "Built an AI-powered application, leveraging natural language processing and integrating cloud storage and vector database for file storage and RAG data retrieval.",
+                "Analyzed data and developed machine learning models for user segmentation.",
+                "Carried out sentiment analysis on customers’ reviews and feedback.",
+                "Collaborated with engineering team to understand business objectives and created compelling visualizations to communicate data findings."
+            ]
+        },
+        {
+            "title": "Software Developer Intern",
+            "company": "DC Clevertech (Contracted for Stacksuit)",
+            "date": "April 2022 - April 2023",
+            "points": [
+                "Maintained code integrity, organization, and applied object-oriented design principle.",
+                "Collaborated with the product and engineering team to design and build high quality and reliable APIs and services.",
+                "Ensured cross-country optimization.",
+                "Debugged, troubleshoot and resolved production issues in a timely fashion."
+            ]
+        }
+    ],
+    "projects": [
+        {
+            "name": "Profitability Analysis",
+            "desc": "Analyzes food order data to uncover insights regarding profitability, delivery efficiency, and payment methods.",
+            "link": "https://github.com/Lolita-codes/delivery_orders_profitability",
+            "image": "https://via.placeholder.com/600x350.png?text=Profitability+Analysis" 
+        },
+        {
+            "name": "HR Churn Analysis",
+            "desc": "Analyzes employee attrition trends to identify factors contributing to turnover and predict outcomes.",
+            "link": "https://github.com/Lolita-codes/hr_data_analysis",
+            "image": "https://via.placeholder.com/600x350.png?text=HR+Churn+Analysis"
+        },
+        {
+            "name": "Customer Segmentation",
+            "desc": "Segments customers based on standard FICO credit scores derived from multiple financial factors.",
+            "link": "https://github.com/Lolita-codes/credit_score_customer_segmentation",
+            "image": "https://via.placeholder.com/600x350.png?text=Customer+Segmentation"
+        },
+        {
+            "name": "User Segmentation",
+            "desc": "Segments users based on demographic and behavioral features to optimize ad targeting strategies.",
+            "link": "https://github.com/Lolita-codes/user_segmentation",
+            "image": "https://via.placeholder.com/600x350.png?text=User+Segmentation"
+        },
+        {
+            "name": "House Price Prediction",
+            "desc": "Builds a predictive model that estimates house prices based on various property characteristics.",
+            "link": "https://github.com/Lolita-codes/Price_prediction",
+            "image": "https://via.placeholder.com/600x350.png?text=House+Price+Prediction"
+        },
+        {
+            "name": "Google Playstore Analysis",
+            "desc": "Provides comprehensive insights into the Android app market, from app ratings to category competitiveness.",
+            "link": "https://github.com/Lolita-codes/Google_Playstore_Apps",
+            "image": "https://via.placeholder.com/600x350.png?text=Playstore+Analysis"
+        }
+    ],
+    "certifications": [
+        {
+            "name": "The Data Science Course: Complete Bootcamp",
+            "issuer": "Udemy",
+            "image": "https://via.placeholder.com/400x250.png?text=Data+Science+Bootcamp"
+        },
+        {
+            "name": "FastAPI – The Complete Course",
+            "issuer": "Udemy",
+            "image": "https://via.placeholder.com/400x250.png?text=FastAPI+Course"
+        },
+        {
+            "name": "Python Django – The Practical Guide",
+            "issuer": "Udemy",
+            "image": "https://via.placeholder.com/400x250.png?text=Django+Guide"
+        },
+        {
+            "name": "100 Days of Code: Python Pro",
+            "issuer": "Udemy",
+            "image": "https://via.placeholder.com/400x250.png?text=Python+100+Days"
+        },
+        {
+            "name": "Data Structures and Algorithms",
+            "issuer": "Udemy",
+            "image": "https://via.placeholder.com/400x250.png?text=Data+Structures"
+        }
+    ]
 }
 
-CERTIFICATIONS = [
-    "The Data Science Course: Complete Data Science Bootcamp — Udemy",
-    "FastAPI – The Complete Course (Beginner + Advanced) — Udemy",
-    "Python Django – The Practical Guide — Udemy",
-    "100 Days of Code: The Complete Python Pro Bootcamp — Udemy",
-    "Python – Data Structures and Algorithms — Udemy",
-]
-
-# ---------- HERO ----------
-st.markdown(
-    f"""
-    <div class="hero">
-        <h1>Omolola Blessing Lawal</h1>
-        <h3 style="color:#c9c9e8; font-weight:400; margin-top:0;">Data Scientist</h3>
-        <p>
-        Hi there! I am a Data Scientist with proven ability in analyzing complex datasets to identify trends,
-        develop models, and provide actionable insights that guide the strategic development of secure and
-        advanced initiatives.<br><br>
-        My experience spans data cleaning and transformation, data analysis and visualization,
-        AI and machine learning solutions, web scraping, and script automation.<br><br>
-        I am committed to innovation and collaboration, and I believe we can make something remarkable
-        together — so let's connect and make a difference through technology and data!
-        </p>
-    </div>
-    """,
-    unsafe_allow_html=True,
+# ==========================================
+# 2. APP CONFIGURATION & STYLING
+# ==========================================
+st.set_page_config(
+    page_title="Omolola Lawal | Data Scientist",
+    layout="wide",
+    initial_sidebar_state="collapsed"
 )
 
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.link_button("💼 LinkedIn", LINKEDIN_URL, use_container_width=True)
-with col2:
-    st.link_button("🐙 GitHub", GITHUB_URL, use_container_width=True)
-with col3:
-    st.link_button("✉️ Email", f"mailto:{EMAIL}", use_container_width=True)
+st.markdown("""
+    <style>
+    /* Force Deep Blue Global Background */
+    .stApp { background-color: #0E0E34 !important; }
+    
+    /* Hide Streamlit default header and footer */
+    header[data-testid="stHeader"] { display: none !important; }
+    footer { display: none !important; }
+    
+    /* Reduce padding on the sides for wider content */
+    .block-container {
+        padding-top: 2rem !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        max-width: 1100px !important; 
+        margin: 0 auto !important;
+    }
 
-# ---------- SKILLS ----------
-st.markdown('<h2 class="section-title">Technical Skills</h2>', unsafe_allow_html=True)
-st.markdown(
-    "".join(f'<span class="skill-pill">{s}</span>' for s in SKILLS),
-    unsafe_allow_html=True,
-)
+    @import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Lora:ital,wght@0,400;0,700;1,400&display=swap');
 
-# ---------- EXPERIENCE ----------
-st.markdown('<h2 class="section-title">Experience</h2>', unsafe_allow_html=True)
-for job in EXPERIENCE:
-    points_html = "".join(f"<li>{p}</li>" for p in job["points"])
-    st.markdown(
-        f"""
-        <div class="card">
-            <h3>{job['title']}</h3>
-            <div class="meta">{job['meta']}</div>
-            <ul>{points_html}</ul>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    /* Global Typography */
+    h1, h2, h3, h4, h5, h6 { font-family: 'Julius Sans One', sans-serif !important; text-align: center !important; margin-bottom: 1rem !important; }
+    p, span, div, li, a { font-family: 'Lora', serif !important; }
+    p, ul { text-align: center !important; }
+    ul { list-style-position: inside; padding-left: 0; }
+    
+    /* =======================================================
+       BULLETPROOF ALTERNATING COLOR SYSTEM
+       ======================================================= */
 
-# ---------- PROJECTS ----------
-st.markdown('<h2 class="section-title">Projects</h2>', unsafe_allow_html=True)
-proj_cols = st.columns(2)
-for i, proj in enumerate(PROJECTS):
-    with proj_cols[i % 2]:
-        st.markdown(
-            f"""
-            <div class="card">
-                <h3>{proj['title']}</h3>
-                <p>{proj['desc']}</p>
-                <a href="{proj['url']}" target="_blank">View on GitHub →</a>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+    /* 1. OFF-WHITE SECTIONS */
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-offwhite) {
+        background-color: #f4f4f5 !important;
+        border: none !important;
+        border-radius: 20px !important;
+        padding: 3rem 2rem !important;
+        margin-bottom: 2rem !important;
+    }
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-offwhite) * {
+        color: #0E0E34 !important; 
+    }
+    /* Inner cards for Off-White Sections */
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-offwhite) div[data-testid="stVerticalBlockBorderWrapper"] {
+        background-color: #ffffff !important;
+        border: 1px solid #e0e0e0 !important;
+        border-radius: 16px !important;
+        padding: 1.5rem !important;
+        height: 100% !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important;
+    }
 
-# ---------- EDUCATION ----------
-st.markdown('<h2 class="section-title">Education</h2>', unsafe_allow_html=True)
-st.markdown(
-    f"""
-    <div class="card">
-        <h3>{EDUCATION['school']}</h3>
-        <p>{EDUCATION['detail'].replace(chr(10), '<br>')}</p>
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
+    /* 2. BLUE SECTIONS */
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-blue) {
+        background-color: #0E0E34 !important;
+        border: 1px solid rgba(255,255,255,0.1) !important;
+        border-radius: 20px !important;
+        padding: 3rem 2rem !important;
+        margin-bottom: 2rem !important;
+    }
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-blue) * {
+        color: #ffffff !important;
+    }
+    /* Inner cards for Blue Sections */
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-blue) div[data-testid="stVerticalBlockBorderWrapper"] {
+        background-color: rgba(255,255,255,0.05) !important;
+        border: 1px solid rgba(255,255,255,0.1) !important;
+        border-radius: 16px !important;
+        padding: 1.5rem !important;
+        height: 100% !important;
+    }
 
-# ---------- CERTIFICATIONS ----------
-st.markdown('<h2 class="section-title">Certifications</h2>', unsafe_allow_html=True)
-cert_cols = st.columns(2)
-for i, cert in enumerate(CERTIFICATIONS):
-    with cert_cols[i % 2]:
-        st.markdown(f"- {cert}")
+    /* Streamlit Link Button Overrides */
+    .stLinkButton > a {
+        border-radius: 9999px !important;
+        font-family: 'Lora', serif !important;
+        font-weight: bold !important;
+        padding: 0.5rem 1.5rem !important;
+        border: none !important;
+        transition: opacity 0.3s ease;
+    }
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-offwhite) .stLinkButton > a {
+        background-color: #0E0E34 !important; color: #ffffff !important;
+    }
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-blue) .stLinkButton > a {
+        background-color: #ffffff !important; color: #0E0E34 !important;
+    }
 
-# ---------- CONTACT ----------
-st.markdown('<h2 class="section-title">Contact</h2>', unsafe_allow_html=True)
-st.markdown(
-    f"""
-    Let's connect! Reach out via [LinkedIn]({LINKEDIN_URL}), check out my work on
-    [GitHub]({GITHUB_URL}), or drop me an [email](mailto:{EMAIL}).
-    """
-)
+    /* =======================================================
+       CUSTOM PILL NAVBAR & DROPDOWN
+       ======================================================= */
+    .nav-pill {
+        background-color: #ffffff;
+        color: #0E0E34 !important;
+        padding: 0.6rem 1.5rem;
+        border-radius: 9999px;
+        text-decoration: none;
+        font-family: 'Lora', serif !important;
+        font-weight: bold;
+        font-size: 0.95rem;
+        display: inline-block;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: opacity 0.3s;
+    }
+    .nav-pill:hover { opacity: 0.8; }
+    
+    .nav-dropdown { position: relative; display: inline-block; }
+    .nav-dropdown-content { 
+        display: none; position: absolute; background-color: #ffffff; 
+        min-width: 140px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); 
+        z-index: 999; border-radius: 12px; overflow: hidden; top: 100%; margin-top: 8px; left: 50%; transform: translateX(-50%);
+    }
+    .nav-dropdown:hover .nav-dropdown-content { display: flex; flex-direction: column; }
+    .nav-dropdown-content a { 
+        color: #0E0E34 !important; padding: 12px 16px; text-decoration: none; 
+        font-family: 'Lora', serif !important; font-weight: bold; text-align: center !important;
+    }
+    .nav-dropdown-content a:hover { background-color: #f1f1f1; }
+    </style>
+""", unsafe_allow_html=True)
 
-st.markdown("---")
-st.caption("© Omolola Blessing Lawal")
+# ==========================================
+# 3. HERO & UNIFIED NAVBAR (No Image)
+# ==========================================
+st.markdown(f"""<div style="text-align: center; padding-bottom: 3rem; color: white;"><div style="font-family: 'Julius Sans One', sans-serif; font-size: 1.6rem; font-weight: bold; color: #ffffff; margin-bottom: 2rem;">My Portfolio</div><div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 4rem;"><a href="#about-me" class="nav-pill">About</a><a href="#technical-skills" class="nav-pill">Skills</a><a href="#experience" class="nav-pill">Experience</a><a href="#projects" class="nav-pill">Projects</a><a href="#certifications" class="nav-pill">Certifications</a><div class="nav-dropdown"><div class="nav-pill" style="cursor: pointer;">Connect ▾</div><div class="nav-dropdown-content"><a href="{PORTFOLIO_DATA['contact']['linkedin']}" target="_blank">LinkedIn</a><a href="mailto:{PORTFOLIO_DATA['email']}">Email</a></div></div></div><h1 id="about-me" style="font-family: 'Julius Sans One', sans-serif; font-size: 4rem; margin-bottom: 2rem; line-height: 1.2; color: white !important;">{PORTFOLIO_DATA['name']}<br>{PORTFOLIO_DATA['role']}</h1><p style="font-family: 'Lora', serif; font-size: 1.15rem; max-width: 800px; margin: 0 auto; line-height: 1.8; color: #e0e0e0 !important;">{PORTFOLIO_DATA['about']}</p></div>""", unsafe_allow_html=True)
+
+# ==========================================
+# 4. MAIN CONTENT (Alternating Colors)
+# ==========================================
+
+# --- Section 1: Technical Skills (OFF-WHITE) ---
+# Shrunk to a compact, responsive cluster of inline badges instead of massive borders
+with st.container(border=True):
+    st.markdown('<div class="theme-offwhite"></div>', unsafe_allow_html=True)
+    st.markdown("<h2 id='technical-skills'>Technical Skills</h2>", unsafe_allow_html=True)
+    
+    skills_html = '<div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 1.5rem;">'
+    for skill in PORTFOLIO_DATA["skills"]:
+        skills_html += f'<span style="background-color: #0E0E34; color: #ffffff !important; padding: 10px 20px; border-radius: 9999px; font-family: \'Lora\', serif; font-weight: bold; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">{skill}</span>'
+    skills_html += '</div>'
+    st.markdown(skills_html, unsafe_allow_html=True)
+
+# --- Section 2: Experience (BLUE) ---
+with st.container(border=True):
+    st.markdown('<div class="theme-blue"></div>', unsafe_allow_html=True)
+    st.markdown("<h2 id='experience'>Experience</h2>", unsafe_allow_html=True)
+    for job in PORTFOLIO_DATA["experience"]:
+        with st.container(border=True):
+            st.markdown(f"### {job['title']}")
+            st.markdown(f"**{job['company']}** | *{job['date']}*")
+            for point in job["points"]:
+                st.write(f"● {point}")
+
+# --- Section 3: Projects (OFF-WHITE) ---
+with st.container(border=True):
+    st.markdown('<div class="theme-offwhite"></div>', unsafe_allow_html=True)
+    st.markdown("<h2 id='projects'>Projects</h2>", unsafe_allow_html=True)
+    proj_cols = st.columns(2)
+    for i, project in enumerate(PORTFOLIO_DATA["projects"]):
+        with proj_cols[i % 2]:
+            with st.container(border=True):
+                st.image(project["image"], use_container_width=True)
+                st.markdown(f"### {project['name']}")
+                st.write(project["desc"])
+                st.link_button("View on GitHub", project["link"], use_container_width=True)
+
+# --- Section 4: Certifications (BLUE) ---
+with st.container(border=True):
+    st.markdown('<div class="theme-blue"></div>', unsafe_allow_html=True)
+    st.markdown("<h2 id='certifications'>Certifications</h2>", unsafe_allow_html=True)
+    cert_cols = st.columns(3)
+    for i, cert in enumerate(PORTFOLIO_DATA["certifications"]):
+        with cert_cols[i % 3]:
+            with st.container(border=True):
+                st.image(cert["image"], use_container_width=True)
+                st.markdown(f"### {cert['name']}")
+                st.write(f"Issuer: {cert['issuer']}")
