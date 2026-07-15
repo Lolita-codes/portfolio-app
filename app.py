@@ -75,248 +75,159 @@ PORTFOLIO_DATA = {
 }
 
 # ==========================================
-# 2. APP CONFIGURATION & STYLING
+# 2. CONFIGURATION & CORE CSS
 # ==========================================
-st.set_page_config(
-    page_title="Omolola Lawal | Data Scientist",
-    layout="wide",
-    initial_sidebar_state="collapsed"
-)
+st.set_page_config(page_title="Omolola Lawal | Data Scientist", layout="wide", initial_sidebar_state="collapsed")
 
-st.markdown("""
-    <style>
-    /* Global App Background */
-    .stApp { background-color: #0E0E34 !important; }
-    
-    /* Hide Streamlit Defaults */
-    header[data-testid="stHeader"] { display: none !important; }
-    footer { display: none !important; }
-    
-    /* Layout Container - Wider content, less padding */
-    .block-container {
-        padding-top: 2rem !important;
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-        max-width: 1250px !important; 
-        margin: 0 auto !important;
-    }
+# We turn Streamlit into a blank edge-to-edge canvas
+css = """
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Lora:ital,wght@0,400;0,700;1,400&display=swap');
 
-    @import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Lora:ital,wght@0,400;0,700;1,400&display=swap');
+/* Reset Streamlit defaults */
+.stApp { background-color: #0E0E34 !important; }
+header[data-testid="stHeader"], footer { display: none !important; }
+.block-container { padding: 0 !important; max-width: 100% !important; }
 
-    /* Global Typography Defaults */
-    h1, h2, h3, h4, h5, h6 { font-family: 'Julius Sans One', sans-serif !important; text-align: center !important; margin-bottom: 1rem !important; }
-    p, span, div, li, a { font-family: 'Lora', serif !important; }
-    p, ul { text-align: center !important; }
-    ul { list-style-position: inside; padding-left: 0; }
-    
-    /* =======================================================
-       BULLETPROOF ALTERNATING COLOR SYSTEM
-       ======================================================= */
+/* Section Containers - Controls alternating backgrounds and padding */
+.section-blue { background-color: #0E0E34; color: white; padding: 5rem 2rem; }
+.section-offwhite { background-color: #f7f7f8; color: #111111; padding: 5rem 2rem; }
+.content-wrapper { max-width: 1200px; margin: 0 auto; }
 
-    /* 1. OFF-WHITE SECTIONS (Odd Children: 1, 3, 5) */
-    div.block-container > div:first-child > div:first-child > div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(odd) {
-        background-color: #f7f7f8 !important;
-        border: none !important;
-        border-radius: 20px !important;
-        padding: 3rem 2rem !important;
-        margin-bottom: 2rem !important;
-    }
-    div.block-container > div:first-child > div:first-child > div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(odd) * {
-        color: #111111 !important; 
-    }
-    /* Inner cards for Off-White Sections */
-    div.block-container > div:first-child > div:first-child > div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(odd) div[data-testid="stVerticalBlockBorderWrapper"] {
-        background-color: #ffffff !important;
-        border: 1px solid #e0e0e0 !important;
-        border-radius: 16px !important;
-        padding: 1.5rem !important;
-        height: 100% !important;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important;
-    }
+/* Grid Layouts - Forces exactly 3 columns */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+@media (max-width: 900px) { .grid-3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .grid-3 { grid-template-columns: 1fr; } }
 
-    /* 2. BLUE SECTIONS (Even Children: 2, 4) */
-    div.block-container > div:first-child > div:first-child > div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(even) {
-        background-color: #0E0E34 !important;
-        border: 1px solid rgba(255,255,255,0.1) !important;
-        border-radius: 20px !important;
-        padding: 3rem 2rem !important;
-        margin-bottom: 2rem !important;
-    }
-    div.block-container > div:first-child > div:first-child > div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(even) * {
-        color: #ffffff !important;
-    }
-    /* Inner cards for Blue Sections */
-    div.block-container > div:first-child > div:first-child > div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(even) div[data-testid="stVerticalBlockBorderWrapper"] {
-        background-color: rgba(255,255,255,0.05) !important;
-        border: 1px solid rgba(255,255,255,0.1) !important;
-        border-radius: 16px !important;
-        padding: 1.5rem !important;
-        height: 100% !important;
-    }
+/* Cards */
+.card-light { background: white; border: 1px solid #e0e0e0; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: flex; flex-direction: column; transition: transform 0.2s; }
+.card-light:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+.card-dark { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 2.5rem; display: flex; flex-direction: column; transition: transform 0.2s; }
+.card-dark:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.3); }
 
-    /* =======================================================
-       CUSTOM EXPERIENCE CARDS (Left Aligned & Justified)
-       ======================================================= */
-    .exp-card {
-        background-color: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 16px;
-        padding: 2.5rem;
-        margin-bottom: 1.5rem;
-        color: #ffffff !important;
-    }
-    .exp-card h3 {
-        text-align: left !important;
-        margin-bottom: 0.5rem !important;
-        font-family: 'Julius Sans One', sans-serif !important;
-    }
-    .exp-card h4 {
-        text-align: left !important;
-        color: #E6B5E8 !important;
-        font-family: 'Lora', serif !important;
-        font-size: 1.1rem;
-        margin-bottom: 1.5rem !important;
-    }
-    .exp-card ul {
-        text-align: justify !important;
-        list-style-position: outside;
-        padding-left: 1.5rem;
-        margin-bottom: 0;
-    }
-    .exp-card li {
-        text-align: justify !important;
-        margin-bottom: 0.8rem;
-        line-height: 1.6;
-    }
+/* Typography */
+h1, h2, h3 { font-family: 'Julius Sans One', sans-serif; }
+p, li, span { font-family: 'Lora', serif; }
+.section-title { text-align: center; font-size: 2.5rem; margin-top: 0; margin-bottom: 3rem; }
 
-    /* Streamlit Link Button Styling */
-    .stLinkButton > a {
-        border-radius: 9999px !important;
-        font-family: 'Lora', serif !important;
-        font-weight: bold !important;
-        padding: 0.5rem 1.5rem !important;
-        border: none !important;
-        transition: opacity 0.3s ease;
-    }
-    div.block-container > div:first-child > div:first-child > div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(odd) .stLinkButton > a {
-        background-color: #0E0E34 !important; color: #ffffff !important;
-    }
-    div.block-container > div:first-child > div:first-child > div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(even) .stLinkButton > a {
-        background-color: #ffffff !important; color: #0E0E34 !important;
-    }
+/* Buttons */
+.btn-blue { background-color: #0E0E34; color: white !important; text-decoration: none; padding: 0.8rem 1.5rem; border-radius: 9999px; text-align: center; font-family: 'Lora', serif; font-weight: bold; margin-top: 1.5rem; }
+.btn-blue:hover { opacity: 0.8; }
 
-    /* =======================================================
-       CUSTOM PILL NAVBAR & DROPDOWN
-       ======================================================= */
-    .nav-pill {
-        background-color: transparent;
-        color: #ffffff !important;
-        padding: 0.6rem 1rem;
-        border-radius: 9999px;
-        text-decoration: none;
-        font-family: 'Lora', serif !important;
-        font-weight: bold;
-        font-size: 1rem;
-        display: inline-block;
-        transition: background-color 0.3s;
-    }
-    .nav-pill:hover { background-color: rgba(255,255,255,0.1); }
-    
-    .nav-dropdown { position: relative; display: inline-block; }
-    .nav-dropdown-content { 
-        display: none; position: absolute; background-color: #ffffff; 
-        min-width: 140px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); 
-        z-index: 999; border-radius: 12px; overflow: hidden; top: 100%; margin-top: 8px; right: 0;
-    }
-    .nav-dropdown:hover .nav-dropdown-content { display: flex; flex-direction: column; }
-    .nav-dropdown-content a { 
-        color: #0E0E34 !important; padding: 12px 16px; text-decoration: none; 
-        font-family: 'Lora', serif !important; font-weight: bold; text-align: center !important;
-    }
-    .nav-dropdown-content a:hover { background-color: #f1f1f1; }
-    </style>
-""", unsafe_allow_html=True)
+/* Nav Bar & Dropdown */
+.nav-pill { color: white !important; text-decoration: none; padding: 0.6rem 1.2rem; border-radius: 9999px; font-family: 'Lora', serif; font-weight: bold; font-size: 1rem; transition: background 0.3s; cursor: pointer; }
+.nav-pill:hover { background-color: rgba(255,255,255,0.1); }
+.nav-dropdown { position: relative; display: inline-block; }
+.nav-dropdown-content { display: none; position: absolute; background-color: white; min-width: 150px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); z-index: 999; border-radius: 12px; top: 100%; right: 0; overflow: hidden; margin-top: 5px; }
+.nav-dropdown:hover .nav-dropdown-content { display: flex; flex-direction: column; }
+.nav-dropdown-content a { color: #0E0E34 !important; padding: 12px 16px; text-decoration: none; font-family: 'Lora', serif; font-weight: bold; text-align: center; }
+.nav-dropdown-content a:hover { background-color: #f1f1f1; }
+</style>
+"""
 
 # ==========================================
-# 3. HERO & TOP NAVBAR
-# ==========================================
-st.markdown(f"""<div style="text-align: center; padding-bottom: 3rem; color: white;"><div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4rem; width: 100%;"><div style="font-family: 'Julius Sans One', sans-serif; font-size: 1.8rem; font-weight: bold; color: #ffffff;">My Portfolio</div><div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; justify-content: flex-end;"><a href="#about-me" class="nav-pill">About</a><a href="#technical-skills" class="nav-pill">Skills</a><a href="#experience" class="nav-pill">Experience</a><a href="#projects" class="nav-pill">Projects</a><a href="#certifications" class="nav-pill">Certifications</a><div class="nav-dropdown"><div class="nav-pill" style="cursor: pointer;">Connect ▾</div><div class="nav-dropdown-content"><a href="{PORTFOLIO_DATA['contact']['linkedin']}" target="_blank">LinkedIn</a><a href="mailto:{PORTFOLIO_DATA['email']}">Email</a></div></div></div></div><h1 id="about-me" style="font-family: 'Julius Sans One', sans-serif; font-size: 4.5rem; margin-bottom: 2rem; line-height: 1.2; color: white !important;">{PORTFOLIO_DATA['name']}<br>{PORTFOLIO_DATA['role']}</h1><p style="font-family: 'Lora', serif; font-size: 1.15rem; max-width: 800px; margin: 0 auto; line-height: 1.8; color: #e0e0e0 !important;">{PORTFOLIO_DATA['about']}</p></div>""", unsafe_allow_html=True)
-
-# ==========================================
-# 4. MAIN CONTENT
+# 3. HTML GENERATION LOGIC
 # ==========================================
 
-# --- Section 1: Technical Skills (OFF-WHITE | 3x5 Grid) ---
-with st.container(border=True):
-    st.markdown("<h2 id='technical-skills'>Technical Skills</h2>", unsafe_allow_html=True)
-    skills = PORTFOLIO_DATA["skills"]
-    for i in range(5):
-        cols = st.columns(3)
-        with cols[0]:
-            if i < len(skills):
-                with st.container(border=True): st.markdown(f"#### {skills[i]}")
-        with cols[1]:
-            if i+5 < len(skills):
-                with st.container(border=True): st.markdown(f"#### {skills[i+5]}")
-        with cols[2]:
-            if i+10 < len(skills):
-                with st.container(border=True): st.markdown(f"#### {skills[i+10]}")
-
-# --- Section 2: Experience (BLUE | Custom Left-Aligned & Justified HTML) ---
-with st.container(border=True):
-    st.markdown("<h2 id='experience'>Experience</h2>", unsafe_allow_html=True)
-    # Using pure HTML inside this container guarantees absolute control over text alignment
-    exp_html = ""
-    for job in PORTFOLIO_DATA["experience"]:
-        points_list = "".join([f"<li>{point}</li>" for point in job["points"]])
-        exp_html += f"""
-        <div class="exp-card">
-            <h3>{job['title']}</h3>
-            <h4>{job['company']} <span style="color: #cccccc !important; font-weight: normal;">| <em>{job['date']}</em></span></h4>
-            <ul>{points_list}</ul>
+# --- Nav & Hero ---
+hero_html = f"""
+<div class="section-blue" style="padding-top: 2rem;">
+    <div class="content-wrapper">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5rem; flex-wrap: wrap; gap: 1rem;">
+            <div style="font-family: 'Julius Sans One', sans-serif; font-size: 1.8rem; font-weight: bold; color: white;">My Portfolio</div>
+            <div style="display: flex; gap: 0.2rem; align-items: center; flex-wrap: wrap;">
+                <a href="#about-me" class="nav-pill">About</a>
+                <a href="#technical-skills" class="nav-pill">Skills</a>
+                <a href="#experience" class="nav-pill">Experience</a>
+                <a href="#projects" class="nav-pill">Projects</a>
+                <a href="#certifications" class="nav-pill">Certifications</a>
+                <div class="nav-dropdown">
+                    <div class="nav-pill">Connect ▾</div>
+                    <div class="nav-dropdown-content">
+                        <a href="{PORTFOLIO_DATA['contact']['linkedin']}" target="_blank">LinkedIn</a>
+                        <a href="mailto:{PORTFOLIO_DATA['email']}">Email</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        """
-    st.markdown(exp_html, unsafe_allow_html=True)
+        <div id="about-me" style="text-align: center; padding-bottom: 4rem;">
+            <h1 style="font-size: 4.5rem; margin-top: 0; margin-bottom: 2rem; line-height: 1.2;">{PORTFOLIO_DATA['name']}<br>{PORTFOLIO_DATA['role']}</h1>
+            <p style="font-size: 1.15rem; max-width: 800px; margin: 0 auto; line-height: 1.8; color: #e0e0e0;">{PORTFOLIO_DATA['about']}</p>
+        </div>
+    </div>
+</div>
+"""
 
-# --- Section 3: Projects (OFF-WHITE | 3 Columns) ---
-with st.container(border=True):
-    st.markdown("<h2 id='projects'>Projects</h2>", unsafe_allow_html=True)
-    proj_cols = st.columns(3)
-    for i, project in enumerate(PORTFOLIO_DATA["projects"]):
-        with proj_cols[i % 3]:
-            with st.container(border=True):
-                st.image(project["image"], use_container_width=True)
-                st.markdown(f"### {project['name']}")
-                st.write(project["desc"])
-                st.link_button("View on GitHub", project["link"], use_container_width=True)
+# --- Skills ---
+skills_html = '<div class="section-offwhite" id="technical-skills"><div class="content-wrapper"><h2 class="section-title">Technical Skills</h2><div class="grid-3">'
+for skill in PORTFOLIO_DATA["skills"]:
+    skills_html += f'<div class="card-light"><h3 style="margin:0; text-align:center;">{skill}</h3></div>'
+skills_html += '</div></div></div>'
 
-# --- Section 4: Certifications (BLUE | 3 Columns) ---
-with st.container(border=True):
-    st.markdown("<h2 id='certifications'>Certifications</h2>", unsafe_allow_html=True)
-    cert_cols = st.columns(3)
-    for i, cert in enumerate(PORTFOLIO_DATA["certifications"]):
-        with cert_cols[i % 3]:
-            with st.container(border=True):
-                st.image(cert["image"], use_container_width=True)
-                st.markdown(f"### {cert['name']}")
-                st.write(f"Issuer: {cert['issuer']}")
+# --- Experience ---
+exp_html = '<div class="section-blue" id="experience"><div class="content-wrapper"><h2 class="section-title">Experience</h2><div style="display: flex; flex-direction: column; gap: 1.5rem;">'
+for job in PORTFOLIO_DATA["experience"]:
+    points = "".join([f"<li style='text-align: justify; margin-bottom: 0.8rem; line-height: 1.6;'>{p}</li>" for p in job["points"]])
+    exp_html += f"""
+    <div class="card-dark" style="color: white;">
+        <h2 style="margin-top: 0; margin-bottom: 0.5rem; text-align: left;">{job['title']}</h2>
+        <h3 style="color: #E6B5E8; margin-bottom: 1.5rem; font-family: 'Lora', serif; text-align: left; font-size: 1.2rem;">{job['company']} <span style="color: #cccccc; font-weight: normal;">| <em>{job['date']}</em></span></h3>
+        <ul style="padding-left: 1.5rem; margin: 0;">{points}</ul>
+    </div>
+    """
+exp_html += '</div></div></div>'
 
-# --- Section 5: Connect (OFF-WHITE | Bottom Footer) ---
-with st.container(border=True):
-    st.markdown("<h2 id='connect'>Connect</h2>", unsafe_allow_html=True)
-    conn_cols = st.columns(3)
-    
-    with conn_cols[0]:
-        with st.container(border=True):
-            st.markdown("### Email")
-            st.link_button("Send an Email", f"mailto:{PORTFOLIO_DATA['email']}", use_container_width=True)
-            
-    with conn_cols[1]:
-        with st.container(border=True):
-            st.markdown("### LinkedIn")
-            st.link_button("View Profile", PORTFOLIO_DATA['contact']['linkedin'], use_container_width=True)
-            
-    with conn_cols[2]:
-        with st.container(border=True):
-            st.markdown("### GitHub")
-            st.link_button("View Repos", PORTFOLIO_DATA['contact']['github'], use_container_width=True)
+# --- Projects ---
+proj_html = '<div class="section-offwhite" id="projects"><div class="content-wrapper"><h2 class="section-title">Projects</h2><div class="grid-3">'
+for p in PORTFOLIO_DATA["projects"]:
+    proj_html += f"""
+    <div class="card-light">
+        <img src="{p['image']}" style="width: 100%; border-radius: 8px; margin-bottom: 1.5rem;">
+        <h2 style="margin-top: 0; text-align: center; font-size: 1.5rem;">{p['name']}</h2>
+        <p style="text-align: center; flex-grow: 1; line-height: 1.6;">{p['desc']}</p>
+        <a href="{p['link']}" target="_blank" class="btn-blue">View on GitHub</a>
+    </div>
+    """
+proj_html += '</div></div></div>'
+
+# --- Certifications ---
+cert_html = '<div class="section-blue" id="certifications"><div class="content-wrapper"><h2 class="section-title">Certifications</h2><div class="grid-3">'
+for c in PORTFOLIO_DATA["certifications"]:
+    cert_html += f"""
+    <div class="card-dark" style="text-align: center; color: white;">
+        <img src="{c['image']}" style="width: 100%; border-radius: 8px; margin-bottom: 1.5rem;">
+        <h2 style="margin-top: 0; font-size: 1.3rem;">{c['name']}</h2>
+        <p style="margin-bottom: 0; color: #cccccc;">Issuer: {c['issuer']}</p>
+    </div>
+    """
+cert_html += '</div></div></div>'
+
+# --- Connect ---
+connect_html = f"""
+<div class="section-offwhite" id="connect">
+    <div class="content-wrapper">
+        <h2 class="section-title">Connect</h2>
+        <div class="grid-3">
+            <div class="card-light" style="align-items: center; justify-content: center; text-align: center; padding: 3rem 2rem;">
+                <h2 style="margin-top: 0;">Email</h2>
+                <a href="mailto:{PORTFOLIO_DATA['email']}" class="btn-blue" style="width: 100%; max-width: 250px;">Send an Email</a>
+            </div>
+            <div class="card-light" style="align-items: center; justify-content: center; text-align: center; padding: 3rem 2rem;">
+                <h2 style="margin-top: 0;">LinkedIn</h2>
+                <a href="{PORTFOLIO_DATA['contact']['linkedin']}" target="_blank" class="btn-blue" style="width: 100%; max-width: 250px;">View Profile</a>
+            </div>
+            <div class="card-light" style="align-items: center; justify-content: center; text-align: center; padding: 3rem 2rem;">
+                <h2 style="margin-top: 0;">GitHub</h2>
+                <a href="{PORTFOLIO_DATA['contact']['github']}" target="_blank" class="btn-blue" style="width: 100%; max-width: 250px;">View Repos</a>
+            </div>
+        </div>
+    </div>
+</div>
+"""
+
+# ==========================================
+# 4. RENDER EVERYTHING
+# ==========================================
+# Combine all the HTML strings and render them securely to the page
+full_page = css + hero_html + skills_html + exp_html + proj_html + cert_html + connect_html
+st.markdown(full_page, unsafe_allow_html=True)
