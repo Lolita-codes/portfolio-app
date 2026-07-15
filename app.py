@@ -322,11 +322,6 @@ st.markdown(f"""
         <div class="hero-content">
             <div class="hero-title">I'm Omolola</div>
             <div class="hero-subtitle">A Data Scientist</div>
-            <div class="social-icons">
-                <a href="mailto:{PORTFOLIO_DATA['email']}" target="_blank" title="Email">✉</a>
-                <a href="{PORTFOLIO_DATA['contact']['github']}" target="_blank" title="GitHub">⌨</a>
-                <a href="{PORTFOLIO_DATA['contact']['linkedin']}" target="_blank" title="LinkedIn">in</a>
-            </div>
         </div>
     </div>
 """, unsafe_allow_html=True)
