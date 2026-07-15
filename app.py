@@ -2,6 +2,7 @@ import streamlit as st
 
 
 PORTFOLIO_DATA = {
+    "email": "lawalblessing4u@gmail.com",
     "about": """
 Hi there! I am a Data Scientist with proven ability in analyzing complex datasets to identify trends, develop models and provide actionable insights that guides strategic development of secure and advanced initiatives.
 
