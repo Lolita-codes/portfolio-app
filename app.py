@@ -4,7 +4,7 @@ import streamlit as st
 PORTFOLIO_DATA = {
     "email": "lawalblessing4u@gmail.com",
     "about": """
-Hi there! I am a Data Scientist with proven ability in analyzing complex datasets to identify trends, develop models and provide actionable insights that guides strategic development of secure and advanced initiatives.
+I am a Data Scientist with proven ability in analyzing complex datasets to identify trends, develop models and provide actionable insights that guides strategic development of secure and advanced initiatives.
 
 My experience spans data cleaning and transformation, data analysis and visualization, AI and machine learning solutions, web scraping and script automation. 
 
@@ -160,81 +160,158 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Custom CSS to hide Streamlit defaults and recreate the hero/navbar layout
+# Custom CSS for Fonts, Alternating Backgrounds, and Cards
 st.markdown("""
     <style>
+    /* --- 1. Global App Background and Fonts --- */
+    .stApp {
+        background-color: #0E0E34;
+        color: #e0e0e0;
+    }
+    
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Julius+Sans+One&family=Lora:ital,wght@0,400;0,700;1,400&display=swap');
+
+    /* Headings */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Julius Sans One', sans-serif !important;
+        color: #ffffff !important;
+        text-align: center !important;
+        margin-bottom: 1rem !important;
+    }
+
+    /* Smaller Texts */
+    p, span, div, li, a {
+        font-family: 'Lora', serif;
+    }
+    
+    /* Center align texts globally */
+    p, ul {
+        text-align: center !important;
+    }
+    ul {
+        list-style-position: inside;
+        padding-left: 0;
+    }
+    
     /* Hide Streamlit default header and footer */
     header[data-testid="stHeader"] {display: none;}
     footer {display: none;}
     
-    /* Remove padding at the top of the app to let the nav sit flush */
+    /* --- 2. Main Content Layout --- */
     .block-container {
         padding-top: 0rem !important;
         padding-left: 0rem !important;
         padding-right: 0rem !important;
-        max-width: 100% !important;
+        max-width: 1000px !important;
+        margin: 0 auto !important;
+    }
+
+    /* --- 3. The Breakout Trick for Main Sections --- */
+    /* Forces top-level containers to stretch full width of the screen */
+    .block-container > div > div > div[data-testid="stVerticalBlockBorderWrapper"] {
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        border: none !important;
+        border-radius: 0 !important;
+        padding: 5rem 10% !important;
+    }
+
+    /* --- 4. Alternating Full-Width Backgrounds --- */
+    /* Even sections: About, Experience, Certs */
+    .block-container > div > div:nth-child(even) > div[data-testid="stVerticalBlockBorderWrapper"] {
+        background-color: #1a1a1a !important; /* Dark Gray */
+    }
+    /* Odd sections: Skills, Projects */
+    .block-container > div > div:nth-child(odd) > div[data-testid="stVerticalBlockBorderWrapper"] {
+        background-color: #0E0E34 !important; /* Dark Blue */
+    }
+
+    /* --- 5. Nested Cards --- */
+    /* Prevents the individual project/experience cards from breaking out, and styles them beautifully */
+    div[data-testid="stVerticalBlockBorderWrapper"] div[data-testid="stVerticalBlockBorderWrapper"] {
+        width: 100% !important;
+        position: relative !important;
+        left: auto !important;
+        right: auto !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        border: 1px solid rgba(230, 181, 232, 0.2) !important;
+        border-radius: 12px !important;
+        padding: 2rem !important;
+        background-color: rgba(255, 255, 255, 0.03) !important;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    div[data-testid="stVerticalBlockBorderWrapper"] div[data-testid="stVerticalBlockBorderWrapper"]:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
     
-    /* Content wrapper for Streamlit elements to keep them centered below the hero */
-    .content-wrapper {
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 2rem;
-    }
-
-    /* Import Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap');
-
-    /* Hero Section Styling */
+    /* --- 6. Navbar & Hero Styling --- */
     .hero-container {
-        background-color: #35325D; /* Matches the dark purple vibe */
+        background-color: #0E0E34;
         color: white;
         padding-bottom: 5rem;
-        font-family: 'Montserrat', sans-serif;
         text-align: center;
-        width: 100%;
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
     }
     
-    /* Custom Navbar Styling */
     .custom-nav {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 2rem 5%;
+        padding: 2rem 10%;
+        max-width: 1200px;
+        margin: 0 auto;
     }
     .nav-left {
+        font-family: 'Julius Sans One', sans-serif !important;
         font-weight: 600;
         font-size: 1.3rem;
-        color: #E6B5E8; /* Pink accent */
+        color: #E6B5E8 !important; 
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .nav-left span {
+        font-family: 'Julius Sans One', sans-serif !important;
     }
     .nav-right {
         display: flex;
         gap: 2.5rem;
         font-size: 0.95rem;
     }
-    .nav-right a {
-        color: #E6B5E8;
+    .nav-right a, .nav-dropdown span {
+        font-family: 'Julius Sans One', sans-serif !important;
+        color: #E6B5E8 !important;
         text-decoration: none;
         transition: color 0.3s;
     }
-    .nav-right a:hover {
-        color: white;
+    .nav-right a:hover, .nav-dropdown span:hover {
+        color: white !important;
     }
     
-    /* Dropdown Styling */
+    /* Dropdown */
     .nav-dropdown {
         position: relative;
         display: inline-block;
-        color: #E6B5E8;
         cursor: pointer;
     }
     .nav-dropdown-content {
         display: none;
         position: absolute;
-        background-color: #2b284c;
+        background-color: #1a1a1a;
         min-width: 120px;
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
-        z-index: 1;
+        z-index: 999;
         right: 0;
         border-radius: 4px;
         margin-top: 5px;
@@ -243,45 +320,44 @@ st.markdown("""
         display: block;
     }
     .nav-dropdown-content a {
-        color: white;
         padding: 12px 16px;
-        text-decoration: none;
         display: block;
-        text-align: left;
+        text-align: left !important;
     }
     .nav-dropdown-content a:hover {
-        background-color: #433e75;
+        background-color: #333;
     }
 
-    /* Hero Content Styling */
+    /* Hero Content */
     .hero-content {
-        padding-top: 5rem;
+        padding-top: 3rem;
     }
     .hero-title {
-        font-family: 'Dancing Script', cursive;
-        font-size: 5rem;
+        font-family: 'Dancing Script', cursive !important;
+        font-size: 5.5rem !important;
         margin-bottom: 0.5rem;
-        color: white;
+        color: white !important;
     }
     .hero-subtitle {
-        font-size: 1.5rem;
-        font-weight: 400;
+        font-family: 'Julius Sans One', sans-serif !important;
+        font-size: 1.5rem !important;
         margin-bottom: 1.5rem;
         color: white;
     }
     .resume-link {
-        color: #E6B5E8;
+        font-family: 'Lora', serif !important;
+        color: #E6B5E8 !important;
         text-decoration: none;
         font-size: 1.1rem;
         border-bottom: 1px dashed #E6B5E8;
         transition: color 0.3s;
     }
     .resume-link:hover {
-        color: white;
+        color: white !important;
         border-bottom: 1px dashed white;
     }
     
-    /* Small Social Icons */
+    /* Social Icons */
     .social-icons {
         margin-top: 2rem;
         display: flex;
@@ -289,12 +365,12 @@ st.markdown("""
         gap: 1.5rem;
     }
     .social-icons a {
-        color: #E6B5E8;
+        color: #E6B5E8 !important;
         font-size: 1.2rem;
         text-decoration: none;
     }
     .social-icons a:hover {
-        color: white;
+        color: white !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -305,7 +381,7 @@ st.markdown("""
 st.markdown(f"""
     <div class="hero-container">
         <div class="custom-nav">
-            <div class="nav-left">Omolola Lawal <span style="font-weight:400; font-size:0.95rem; color:#b5b3c7;">| Data Scientist</span></div>
+            <div class="nav-left">Portfolio <span style="font-weight:400; font-size:0.95rem; color:#b5b3c7;"></span></div>
             <div class="nav-right">
                 <a href="#about-me">About</a>
                 <a href="#technical-skills">Skills</a>
@@ -321,8 +397,8 @@ st.markdown(f"""
             </div>
         </div>
         <div class="hero-content">
-            <div class="hero-title">I'm Omolola</div>
-            <div class="hero-subtitle">A Data Scientist</div>
+            <div class="hero-title">Hi, I'm Omolola Lawal</div>
+            <div class="hero-subtitle">Data Scientist</div>
         </div>
     </div>
 """, unsafe_allow_html=True)
@@ -331,47 +407,36 @@ st.markdown(f"""
 # 4. MAIN CONTENT
 # ==========================================
 
-# We create an empty container in the center for the rest of the page content
-with st.container():
-    st.markdown("<div class='content-wrapper'>", unsafe_allow_html=True)
-    
-    # --- About Me ---
+# --- About Me (Will be Dark Gray) ---
+with st.container(border=True):
     st.markdown("<h2 id='about-me'>About Me</h2>", unsafe_allow_html=True)
     st.write(PORTFOLIO_DATA["about"])
-    
-    st.markdown("<br><br>", unsafe_allow_html=True)
 
-    # --- Technical Skills (3 x 5 Layout) ---
+# --- Technical Skills (Will be #0E0E34) ---
+with st.container(border=True):
     st.markdown("<h2 id='technical-skills'>Technical Skills</h2>", unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
     skills = PORTFOLIO_DATA["skills"]
     
-    # Looping exactly 5 times for the 15 skills
     for i in range(5):
-        col1.markdown(f"- **{skills[i]}**")
-        col2.markdown(f"- **{skills[i+5]}**")
-        col3.markdown(f"- **{skills[i+10]}**")
+        col1.markdown(f"- {skills[i]}")
+        col2.markdown(f"- {skills[i+5]}")
+        col3.markdown(f"- {skills[i+10]}")
 
-    st.divider()
-
-    # --- Experience ---
+# --- Experience (Will be Dark Gray) ---
+with st.container(border=True):
     st.markdown("<h2 id='experience'>Experience</h2>", unsafe_allow_html=True)
     for job in PORTFOLIO_DATA["experience"]:
+        # The CSS ensures these nested containers look like beautiful cards, not full-width sections
         with st.container(border=True):
-            ecol1, ecol2 = st.columns([3, 1])
-            with ecol1:
-                st.subheader(job["title"])
-                st.write(f"**{job['company']}**")
-            with ecol2:
-                st.write(f"*{job['date']}*")
-            
+            st.markdown(f"### {job['title']}")
+            st.markdown(f"**{job['company']}** | *{job['date']}*")
             for point in job["points"]:
                 st.write(f"✓ {point}")
 
-    st.divider()
-
-    # --- Projects (With Images) ---
+# --- Projects (Will be #0E0E34) ---
+with st.container(border=True):
     st.markdown("<h2 id='projects'>Featured Projects</h2>", unsafe_allow_html=True)
     
     proj_cols = st.columns(2)
@@ -379,13 +444,12 @@ with st.container():
         with proj_cols[i % 2]:
             with st.container(border=True):
                 st.image(project["image"], use_container_width=True)
-                st.markdown(f"#### {project['name']}")
+                st.markdown(f"### {project['name']}")
                 st.write(project["desc"])
                 st.link_button("View on GitHub", project["link"], use_container_width=True)
 
-    st.divider()
-
-    # --- Certifications (With Images) ---
+# --- Certifications (Will be Dark Gray) ---
+with st.container(border=True):
     st.markdown("<h2 id='certifications'>Certifications</h2>", unsafe_allow_html=True)
     
     cert_cols = st.columns(3)
@@ -394,6 +458,4 @@ with st.container():
             with st.container(border=True):
                 st.image(cert["image"], use_container_width=True)
                 st.markdown(f"**{cert['name']}**")
-                st.caption(f"Issuer: {cert['issuer']}")
-
-    st.markdown("</div>", unsafe_allow_html=True)
+                st.write(f"Issuer: {cert['issuer']}")
