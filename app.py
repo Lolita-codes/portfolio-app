@@ -1,363 +1,293 @@
-import textwrap
 import streamlit as st
 
-# ---------- PAGE CONFIG ----------
+# ==========================================
+# 1. PORTFOLIO DATA (Education Removed, 10 Projects Added)
+# ==========================================
+PORTFOLIO_DATA = {
+    "name": "Omolola Blessing Lawal",
+    "role": "Data Scientist",
+    "email": "your.email@example.com", 
+    "about": "Hi there! I am a Data Scientist with proven ability in analyzing complex datasets to identify trends, develop models and provide actionable insights that guides strategic development of secure and advanced initiatives. My experience spans data cleaning and transformation, data analysis and visualization, AI and machine learning solutions, web scraping and script automation. I am committed to innovation and collaboration and I believe we can make something remarkable together so let’s connect and make a difference through technology and data!",
+    "contact": {
+        "linkedin": "https://www.linkedin.com/in/omolola-lawal-2a9a45188",
+        "github": "https://github.com/Lolita-codes"
+    },
+    "skills": [
+        "Python", "Scikit-Learn", "Pandas", 
+        "Seaborn", "Matplotlib", "Plotly",
+        "Numpy", "SQL & PostgreSQL", "Tableau", 
+        "Langchain", "NLTK", "SpaCy",
+        "BeautifulSoup", "FastAPI", "Git & GitHub"
+    ],
+    "experience": [
+        {
+            "title": "Informatics Analyst",
+            "company": "University College Hospital, Ibadan, Nigeria",
+            "date": "Nov 2023 - Nov 2024",
+            "points": [
+                "Identified trends and opportunities for improving medication management and safety through data.",
+                "Maintained inventory management software, ensuring seamless integration with pharmacy dispensing and procurement systems.",
+                "Analyzed inventory data to identify usage trends and predict future demand for medications and maintained accurate records of drug stock levels."
+            ]
+        },
+        {
+            "title": "Data Scientist Intern",
+            "company": "DC Clevertech (Contracted for Stacksuit)",
+            "date": "May 2023 - May 2024",
+            "points": [
+                "Built an AI-powered application, leveraging natural language processing and integrating cloud storage and vector database for file storage and RAG data retrieval.",
+                "Analyzed data and developed machine learning models for user segmentation.",
+                "Carried out sentiment analysis on customers’ reviews and feedback.",
+                "Collaborated with engineering team to understand business objectives and created compelling visualizations to communicate data findings."
+            ]
+        },
+        {
+            "title": "Software Developer Intern",
+            "company": "DC Clevertech (Contracted for Stacksuit)",
+            "date": "April 2022 - April 2023",
+            "points": [
+                "Maintained code integrity, organization, and applied object-oriented design principle.",
+                "Collaborated with the product and engineering team to design and build high quality and reliable APIs and services.",
+                "Ensured cross-country optimization.",
+                "Debugged, troubleshoot and resolved production issues in a timely fashion."
+            ]
+        }
+    ],
+    "projects": [
+        {"name": "Profitability Analysis", "desc": "Analyzes food order data to uncover insights regarding profitability, delivery efficiency, and payment methods.", "link": "https://github.com/Lolita-codes/delivery_orders_profitability", "image": "https://via.placeholder.com/600x350.png?text=Profitability+Analysis"},
+        {"name": "HR Churn Analysis", "desc": "Analyzes employee attrition trends to identify factors contributing to turnover and predict outcomes.", "link": "https://github.com/Lolita-codes/hr_data_analysis", "image": "https://via.placeholder.com/600x350.png?text=HR+Churn+Analysis"},
+        {"name": "Customer Segmentation", "desc": "Segments customers based on standard FICO credit scores derived from multiple financial factors.", "link": "https://github.com/Lolita-codes/credit_score_customer_segmentation", "image": "https://via.placeholder.com/600x350.png?text=Customer+Segmentation"},
+        {"name": "User Segmentation", "desc": "Segments users based on demographic and behavioral features to optimize ad targeting strategies.", "link": "https://github.com/Lolita-codes/user_segmentation", "image": "https://via.placeholder.com/600x350.png?text=User+Segmentation"},
+        {"name": "House Price Prediction", "desc": "Builds a predictive model that estimates house prices based on various property characteristics.", "link": "https://github.com/Lolita-codes/Price_prediction", "image": "https://via.placeholder.com/600x350.png?text=House+Price+Prediction"},
+        {"name": "Playstore Analysis", "desc": "Provides comprehensive insights into the Android app market, from app ratings to category competitiveness.", "link": "https://github.com/Lolita-codes/Google_Playstore_Apps", "image": "https://via.placeholder.com/600x350.png?text=Playstore+Analysis"},
+        {"name": "US Police Shootings", "desc": "A comprehensive understanding of social trends and the factors contributing to fatal police use of force in the US.", "link": "https://github.com/Lolita-codes/US_police_shootings", "image": "https://via.placeholder.com/600x350.png?text=Police+Shootings"},
+        {"name": "Flight Deal Finder", "desc": "Tracks locations and integrates with a flight search API to identify deals below a price threshold.", "link": "https://github.com/Lolita-codes/Flight_deal_finder", "image": "https://via.placeholder.com/600x350.png?text=Flight+Deals"},
+        {"name": "Sentiment Analysis", "desc": "Identifies key sentiment trends and categorizes opinions regarding a vaccine across demographics.", "link": "https://github.com/Lolita-codes/Sentiment_analysis_Pfizer_vaccine", "image": "https://via.placeholder.com/600x350.png?text=Sentiment+Analysis"},
+        {"name": "Price Optimization", "desc": "Predicts total price to maximize revenue considering category, freight, competitors, and attributes.", "link": "https://github.com/Lolita-codes/price_optimization", "image": "https://via.placeholder.com/600x350.png?text=Price+Optimization"}
+    ],
+    "certifications": [
+        {"name": "The Data Science Course: Complete Bootcamp", "issuer": "Udemy", "image": "https://via.placeholder.com/400x250.png?text=Data+Science+Bootcamp"},
+        {"name": "FastAPI – The Complete Course", "issuer": "Udemy", "image": "https://via.placeholder.com/400x250.png?text=FastAPI+Course"},
+        {"name": "Python Django – The Practical Guide", "issuer": "Udemy", "image": "https://via.placeholder.com/400x250.png?text=Django+Guide"},
+        {"name": "100 Days of Code: Python Pro", "issuer": "Udemy", "image": "https://via.placeholder.com/400x250.png?text=Python+100+Days"},
+        {"name": "Data Structures and Algorithms", "issuer": "Udemy", "image": "https://via.placeholder.com/400x250.png?text=Data+Structures"}
+    ]
+}
+
+# ==========================================
+# 2. APP CONFIGURATION & STYLING
+# ==========================================
 st.set_page_config(
-    page_title="Omolola Blessing Lawal | Data Scientist",
-    page_icon="\U0001F4A0",
+    page_title="Omolola Lawal | Data Scientist",
     layout="wide",
+    initial_sidebar_state="collapsed"
 )
 
-ACCENT = "#0E0E34"
+st.markdown("""
+    <style>
+    /* Global App Background */
+    .stApp { background-color: #0E0E34 !important; }
+    
+    /* Hide Streamlit Defaults */
+    header[data-testid="stHeader"] { display: none !important; }
+    footer { display: none !important; }
+    
+    /* Layout Container - Wider content, less padding */
+    .block-container {
+        padding-top: 2rem !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        max-width: 1250px !important; 
+        margin: 0 auto !important;
+    }
 
+    @import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Lora:ital,wght@0,400;0,700;1,400&display=swap');
 
-def md(html: str):
-    """st.markdown wrapper that strips common leading whitespace so
-    indented HTML never gets misread as a markdown code block."""
-    st.markdown(textwrap.dedent(html), unsafe_allow_html=True)
+    /* Global Typography Defaults */
+    h1, h2, h3, h4, h5, h6 { font-family: 'Julius Sans One', sans-serif !important; text-align: center !important; margin-bottom: 1rem !important; }
+    p, span, div, li, a { font-family: 'Lora', serif !important; }
+    p, ul { text-align: center !important; }
+    ul { list-style-position: inside; padding-left: 0; }
+    
+    /* =======================================================
+       BULLETPROOF ALTERNATING COLOR SYSTEM
+       ======================================================= */
 
+    /* 1. OFF-WHITE SECTIONS */
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-offwhite) {
+        background-color: #f7f7f8 !important;
+        border: none !important;
+        border-radius: 20px !important;
+        padding: 3rem 2rem !important;
+        margin-bottom: 2rem !important;
+    }
+    /* Black text for Off-White Sections */
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-offwhite) * {
+        color: #111111 !important; 
+    }
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-offwhite) div[data-testid="stVerticalBlockBorderWrapper"] {
+        background-color: #ffffff !important;
+        border: 1px solid #e0e0e0 !important;
+        border-radius: 16px !important;
+        padding: 1.5rem !important;
+        height: 100% !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important;
+    }
 
-# ---------- DATA ----------
-LINKEDIN_URL = "https://www.linkedin.com/in/omolola-lawal-2a9a45188"
-GITHUB_URL = "https://github.com/Lolita-codes"
-EMAIL = "your-email@example.com"  # TODO: replace with your real email
+    /* 2. BLUE SECTIONS */
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-blue) {
+        background-color: #0E0E34 !important;
+        border: 1px solid rgba(255,255,255,0.1) !important;
+        border-radius: 20px !important;
+        padding: 3rem 2rem !important;
+        margin-bottom: 2rem !important;
+    }
+    /* White text for Blue Sections */
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-blue) * {
+        color: #ffffff !important;
+    }
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-blue) div[data-testid="stVerticalBlockBorderWrapper"] {
+        background-color: rgba(255,255,255,0.05) !important;
+        border: 1px solid rgba(255,255,255,0.1) !important;
+        border-radius: 16px !important;
+        padding: 1.5rem !important;
+        height: 100% !important;
+    }
 
-SKILLS = [
-    "Python", "Scikit-Learn", "Pandas", "Seaborn", "Matplotlib",
-    "Plotly", "Numpy", "SQL & PostgreSQL", "Tableau", "Langchain",
-    "NLTK", "SpaCy", "BeautifulSoup", "FastAPI", "Git & GitHub",
-]
+    /* --- Left Align Experience Section --- */
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.exp-section) div[data-testid="stVerticalBlockBorderWrapper"] * {
+        text-align: left !important;
+    }
 
-EXPERIENCE = [
-    {
-        "title": "Informatics Analyst",
-        "meta": "University College Hospital, Ibadan, Nigeria · Nov 2023 – Nov 2024",
-        "points": [
-            "Identified trends and opportunities for improving medication management and safety through data.",
-            "Maintained inventory management software, ensuring seamless integration with pharmacy dispensing and procurement systems.",
-            "Analyzed inventory data to identify usage trends and predict future demand for medications, and maintained accurate records of drug stock levels.",
-        ],
-    },
-    {
-        "title": "Data Scientist Intern",
-        "meta": "Stacksuit, Prague, Czech Republic · May 2023 – May 2024",
-        "points": [
-            "Built an AI-powered application leveraging natural language processing, integrating cloud storage and a vector database for file storage and RAG data retrieval.",
-            "Analyzed data and developed machine learning models for user segmentation.",
-            "Carried out sentiment analysis on customers' reviews and feedback.",
-            "Collaborated with the engineering team to understand business objectives and created compelling visualizations to communicate data findings.",
-        ],
-    },
-    {
-        "title": "Software Developer Intern",
-        "meta": "Stacksuit, Prague, Czech Republic · April 2022 – April 2023",
-        "points": [
-            "Maintained code integrity and organization, applying object-oriented design principles.",
-            "Collaborated with the product and engineering team to design and build high-quality, reliable APIs and services.",
-            "Ensured cross-country optimization.",
-            "Debugged, troubleshot, and resolved production issues in a timely fashion.",
-        ],
-    },
-]
+    /* Streamlit Link Button Styling */
+    .stLinkButton > a {
+        border-radius: 9999px !important;
+        font-family: 'Lora', serif !important;
+        font-weight: bold !important;
+        padding: 0.5rem 1.5rem !important;
+        border: none !important;
+        transition: opacity 0.3s ease;
+    }
+    /* Button inside Off-White sections */
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-offwhite) .stLinkButton > a {
+        background-color: #0E0E34 !important; color: #ffffff !important;
+    }
+    /* Button inside Blue sections */
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-blue) .stLinkButton > a {
+        background-color: #ffffff !important; color: #0E0E34 !important;
+    }
 
-GITHUB_MARK = "https://sitefile.co/6772c19a0931ea2de588b066/1736605813995_github-mark-ea2971cee799.png"
-
-PROJECTS = [
-    {
-        "title": "Profitability Analysis",
-        "desc": "Analyzes food order data to uncover insights on profitability, delivery efficiency, payment methods, and discount trends; identifies optimization areas and simulates proposed changes.",
-        "url": "https://github.com/Lolita-codes/delivery_orders_profitability",
-        "img": "https://sitefile.co/6772c19a0931ea2de588b066/1736605428839_deliveryordersdb.png",
-    },
-    {
-        "title": "HR Churn Analysis",
-        "desc": "Analyzes employee attrition trends within a corporate environment to identify factors contributing to employees leaving and predict employee turnover.",
-        "url": "https://github.com/Lolita-codes/hr_data_analysis",
-        "img": "https://sitefile.co/6772c19a0931ea2de588b066/1736605833566_hrdatadashboard.png",
-    },
-    {
-        "title": "Credit Score – Customer Segmentation",
-        "desc": "Segments customers based on standard FICO credit scores derived from multiple financial factors.",
-        "url": "https://github.com/Lolita-codes/credit_score_customer_segmentation",
-        "img": GITHUB_MARK,
-    },
-    {
-        "title": "User Segmentation",
-        "desc": "Segments users based on demographic and behavioral features to optimize ad targeting strategies and increase engagement and conversions.",
-        "url": "https://github.com/Lolita-codes/user_segmentation",
-        "img": GITHUB_MARK,
-    },
-    {
-        "title": "House Price Prediction",
-        "desc": "Explores trends and factors contributing to house pricing and builds a predictive model that estimates prices from property characteristics.",
-        "url": "https://github.com/Lolita-codes/Price_prediction",
-        "img": GITHUB_MARK,
-    },
-    {
-        "title": "Google Playstore Analysis",
-        "desc": "Comprehensive insights into the Android app market — ratings, reviews, category competitiveness, and pricing strategies — to help developers make informed decisions.",
-        "url": "https://github.com/Lolita-codes/Google_Playstore_Apps",
-        "img": GITHUB_MARK,
-    },
-    {
-        "title": "US Police Shootings",
-        "desc": "Explores social trends and factors contributing to fatal police use of force in the United States.",
-        "url": "https://github.com/Lolita-codes/US_police_shootings",
-        "img": GITHUB_MARK,
-    },
-    {
-        "title": "Flight Deal Finder",
-        "desc": "Tracks specified locations against a price threshold, integrates a flight search API to find deals below the cutoff, and delivers details via email and SMS.",
-        "url": "https://github.com/Lolita-codes/Flight_deal_finder",
-        "img": GITHUB_MARK,
-    },
-    {
-        "title": "Sentiment Analysis – Pfizer Vaccine",
-        "desc": "Identifies key sentiment trends, categorizes opinions, and provides insight into how the vaccine is perceived across demographics and platforms.",
-        "url": "https://github.com/Lolita-codes/Sentiment_analysis_Pfizer_vaccine",
-        "img": GITHUB_MARK,
-    },
-    {
-        "title": "Price Optimization",
-        "desc": "Uses historical sales data to predict product pricing that maximizes revenue, factoring in category, unit price, freight price, competitor prices, and other attributes.",
-        "url": "https://github.com/Lolita-codes/price_optimization",
-        "img": GITHUB_MARK,
-    },
-]
-
-CERTIFICATIONS = [
-    {
-        "title": "The Data Science Course: Complete Data Science Bootcamp",
-        "issuer": "Udemy",
-        "img": "https://sitefile.co/6772c19a0931ea2de588b066/1735836118191_dscertpage-0001.jpg",
-    },
-    {
-        "title": "FastAPI – The Complete Course (Beginner + Advanced)",
-        "issuer": "Udemy",
-        "img": "https://sitefile.co/6772c19a0931ea2de588b066/1735837771789_uc-3da0935c-a9df-4f53-9c66-3a966b0cefee.jpg",
-    },
-    {
-        "title": "Python Django – The Practical Guide",
-        "issuer": "Udemy",
-        "img": "https://sitefile.co/6772c19a0931ea2de588b066/1735836792320_img4471.jpg",
-    },
-    {
-        "title": "100 Days of Code: The Complete Python Pro Bootcamp",
-        "issuer": "Udemy",
-        "img": "https://sitefile.co/6772c19a0931ea2de588b066/1735835863257_python100dayscertpage-0001.jpg",
-    },
-    {
-        "title": "Python – Data Structures and Algorithms",
-        "issuer": "Udemy",
-        "img": "https://sitefile.co/6772c19a0931ea2de588b066/1735836945675_675830081page-00011.jpg",
-    },
-]
-
-# ---------- STYLING ----------
-md(f"""
-<style>
-    html, body, [class*="css"] {{
-        font-family: 'Lora', serif;
-    }}
-    h1, h2, h3 {{
-        font-family: 'Georgia', serif;
-        letter-spacing: 0.5px;
-    }}
-
-    /* top nav */
-    .topnav {{
-        position: sticky;
-        top: 0;
-        z-index: 999;
-        background-color: {ACCENT};
-        padding: 0.8rem 1.5rem;
-        border-radius: 0 0 10px 10px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        gap: 1.8rem;
-        margin: -1rem -1rem 1.5rem -1rem;
-    }}
-    .topnav a {{
-        color: #f0f0f5 !important;
+    /* =======================================================
+       CUSTOM PILL NAVBAR & DROPDOWN
+       ======================================================= */
+    .nav-pill {
+        background-color: transparent;
+        color: #ffffff !important;
+        padding: 0.6rem 1rem;
+        border-radius: 9999px;
         text-decoration: none;
-        font-size: 0.92rem;
-        font-weight: 600;
-        white-space: nowrap;
-    }}
-    .topnav a:hover {{ color: #ffffff !important; text-decoration: underline; }}
-    .dropdown {{ position: relative; display: inline-block; }}
-    .dropdown-content {{
-        display: none;
-        position: absolute;
-        right: 0;
-        background-color: white;
-        min-width: 150px;
-        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-        border-radius: 8px;
-        padding: 0.4rem 0;
-        z-index: 1000;
-    }}
-    .dropdown-content a {{
-        color: {ACCENT} !important;
-        display: block;
-        padding: 0.5rem 1rem;
-        font-weight: 600;
-    }}
-    .dropdown-content a:hover {{ background-color: #f0f0f5; text-decoration: none; }}
-    .dropdown:hover .dropdown-content {{ display: block; }}
+        font-family: 'Lora', serif !important;
+        font-weight: bold;
+        font-size: 1rem;
+        display: inline-block;
+        transition: background-color 0.3s;
+    }
+    .nav-pill:hover { background-color: rgba(255,255,255,0.1); }
+    
+    .nav-dropdown { position: relative; display: inline-block; }
+    .nav-dropdown-content { 
+        display: none; position: absolute; background-color: #ffffff; 
+        min-width: 140px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); 
+        z-index: 999; border-radius: 12px; overflow: hidden; top: 100%; margin-top: 8px; right: 0;
+    }
+    .nav-dropdown:hover .nav-dropdown-content { display: flex; flex-direction: column; }
+    .nav-dropdown-content a { 
+        color: #0E0E34 !important; padding: 12px 16px; text-decoration: none; 
+        font-family: 'Lora', serif !important; font-weight: bold; text-align: center !important;
+    }
+    .nav-dropdown-content a:hover { background-color: #f1f1f1; }
+    </style>
+""", unsafe_allow_html=True)
 
-    .hero {{
-        background-color: {ACCENT};
-        color: white;
-        padding: 3rem 2rem;
-        border-radius: 12px;
-        margin-bottom: 1rem;
-    }}
-    .hero h1 {{ color: white; font-size: 2.4rem; margin-bottom: 0.2rem; }}
-    .hero p {{ color: #e0e0f0; font-size: 1.05rem; line-height: 1.6; }}
+# ==========================================
+# 3. HERO & TOP NAVBAR
+# ==========================================
+st.markdown(f"""<div style="text-align: center; padding-bottom: 3rem; color: white;"><div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4rem; width: 100%;"><div style="font-family: 'Julius Sans One', sans-serif; font-size: 1.8rem; font-weight: bold; color: #ffffff;">My Portfolio</div><div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; justify-content: flex-end;"><a href="#about-me" class="nav-pill">About</a><a href="#technical-skills" class="nav-pill">Skills</a><a href="#experience" class="nav-pill">Experience</a><a href="#projects" class="nav-pill">Projects</a><a href="#certifications" class="nav-pill">Certifications</a><div class="nav-dropdown"><div class="nav-pill" style="cursor: pointer; background-color: #ffffff; color: #0E0E34 !important; padding: 0.6rem 1.5rem;">Connect ▾</div><div class="nav-dropdown-content"><a href="{PORTFOLIO_DATA['contact']['linkedin']}" target="_blank">LinkedIn</a><a href="mailto:{PORTFOLIO_DATA['email']}">Email</a></div></div></div></div><h1 id="about-me" style="font-family: 'Julius Sans One', sans-serif; font-size: 4rem; margin-bottom: 2rem; line-height: 1.2; color: white !important;">{PORTFOLIO_DATA['name']}<br>{PORTFOLIO_DATA['role']}</h1><p style="font-family: 'Lora', serif; font-size: 1.15rem; max-width: 800px; margin: 0 auto; line-height: 1.8; color: #e0e0e0 !important;">{PORTFOLIO_DATA['about']}</p></div>""", unsafe_allow_html=True)
 
-    .section-title {{
-        border-bottom: 3px solid {ACCENT};
-        padding-bottom: 0.3rem;
-        margin-top: 2.5rem;
-        margin-bottom: 1rem;
-        scroll-margin-top: 90px;
-    }}
+# ==========================================
+# 4. MAIN CONTENT
+# ==========================================
 
-    .skills-grid {{
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.7rem;
-    }}
-    .skill-pill {{
-        background-color: #f0f0f5;
-        color: {ACCENT};
-        padding: 0.6rem 0.9rem;
-        border-radius: 10px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        text-align: center;
-    }}
+# --- Section 1: Technical Skills (OFF-WHITE | 3x5 Grid) ---
+with st.container(border=True):
+    st.markdown('<div class="theme-offwhite"></div>', unsafe_allow_html=True)
+    st.markdown("<h2 id='technical-skills'>Technical Skills</h2>", unsafe_allow_html=True)
+    skills = PORTFOLIO_DATA["skills"]
+    for i in range(5):
+        cols = st.columns(3)
+        with cols[0]:
+            if i < len(skills):
+                with st.container(border=True): st.markdown(f"#### {skills[i]}")
+        with cols[1]:
+            if i+5 < len(skills):
+                with st.container(border=True): st.markdown(f"#### {skills[i+5]}")
+        with cols[2]:
+            if i+10 < len(skills):
+                with st.container(border=True): st.markdown(f"#### {skills[i+10]}")
 
-    .card {{
-        background-color: #fafafc;
-        border: 1px solid #e5e5ec;
-        border-radius: 10px;
-        padding: 1.2rem;
-        margin-bottom: 1rem;
-        height: 100%;
-    }}
-    .card h3 {{ margin-bottom: 0.3rem; color: {ACCENT}; }}
-    .card .meta {{ font-size: 0.85rem; color: #666; margin-bottom: 0.6rem; }}
-    .card img {{
-        width: 100%;
-        height: 160px;
-        object-fit: cover;
-        border-radius: 8px;
-        margin-bottom: 0.8rem;
-        background-color: #eee;
-    }}
-    .cert-img {{
-        width: 100%;
-        border-radius: 8px;
-        margin-bottom: 0.6rem;
-    }}
+# --- Section 2: Experience (BLUE | Left Aligned) ---
+with st.container(border=True):
+    st.markdown('<div class="theme-blue exp-section"></div>', unsafe_allow_html=True)
+    st.markdown("<h2 id='experience'>Experience</h2>", unsafe_allow_html=True)
+    for job in PORTFOLIO_DATA["experience"]:
+        with st.container(border=True):
+            st.markdown(f"### {job['title']}")
+            st.markdown(f"**{job['company']}** | *{job['date']}*")
+            for point in job["points"]:
+                st.write(f"● {point}")
 
-    a {{ color: {ACCENT}; text-decoration: none; font-weight: 600; }}
-    a:hover {{ text-decoration: underline; }}
-</style>
-""")
+# --- Section 3: Projects (OFF-WHITE | 3 Columns) ---
+with st.container(border=True):
+    st.markdown('<div class="theme-offwhite"></div>', unsafe_allow_html=True)
+    st.markdown("<h2 id='projects'>Projects</h2>", unsafe_allow_html=True)
+    proj_cols = st.columns(3)
+    for i, project in enumerate(PORTFOLIO_DATA["projects"]):
+        with proj_cols[i % 3]:
+            with st.container(border=True):
+                st.image(project["image"], use_container_width=True)
+                st.markdown(f"### {project['name']}")
+                st.write(project["desc"])
+                st.link_button("View on GitHub", project["link"], use_container_width=True)
 
-# ---------- TOP NAVIGATION ----------
-md(f"""
-<div class="topnav">
-    <a href="#about">About Me</a>
-    <a href="#skills">Technical Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#experience">Experience</a>
-    <a href="#certifications">Certifications</a>
-    <div class="dropdown">
-        <a href="#">Connect &#9662;</a>
-        <div class="dropdown-content">
-            <a href="{LINKEDIN_URL}" target="_blank">LinkedIn</a>
-            <a href="{GITHUB_URL}" target="_blank">GitHub</a>
-            <a href="mailto:{EMAIL}">Email</a>
-        </div>
-    </div>
-</div>
-""")
+# --- Section 4: Certifications (BLUE | 3 Columns) ---
+with st.container(border=True):
+    st.markdown('<div class="theme-blue"></div>', unsafe_allow_html=True)
+    st.markdown("<h2 id='certifications'>Certifications</h2>", unsafe_allow_html=True)
+    cert_cols = st.columns(3)
+    for i, cert in enumerate(PORTFOLIO_DATA["certifications"]):
+        with cert_cols[i % 3]:
+            with st.container(border=True):
+                st.image(cert["image"], use_container_width=True)
+                st.markdown(f"### {cert['name']}")
+                st.write(f"Issuer: {cert['issuer']}")
 
-# ---------- HERO / ABOUT ME ----------
-md("""
-<div id="about" class="hero">
-    <h1>Omolola Blessing Lawal</h1>
-    <h3 style="color:#c9c9e8; font-weight:400; margin-top:0;">Data Scientist</h3>
-    <p>
-    Hi there! I am a Data Scientist with proven ability in analyzing complex datasets to identify trends,
-    develop models, and provide actionable insights that guide the strategic development of secure and
-    advanced initiatives.<br><br>
-    My experience spans data cleaning and transformation, data analysis and visualization,
-    AI and machine learning solutions, web scraping, and script automation.<br><br>
-    I am committed to innovation and collaboration, and I believe we can make something remarkable
-    together — so let's connect and make a difference through technology and data!
-    </p>
-</div>
-""")
-
-# ---------- SKILLS ----------
-skill_pills = "".join(f'<div class="skill-pill">{s}</div>' for s in SKILLS)
-md(f"""
-<h2 id="skills" class="section-title">Technical Skills</h2>
-<div class="skills-grid">{skill_pills}</div>
-""")
-
-# ---------- PROJECTS ----------
-md('<h2 id="projects" class="section-title">Projects</h2>')
-proj_cols = st.columns(2)
-for i, proj in enumerate(PROJECTS):
-    with proj_cols[i % 2]:
-        md(f"""
-        <div class="card">
-            <img src="{proj['img']}" alt="{proj['title']}">
-            <h3>{proj['title']}</h3>
-            <p>{proj['desc']}</p>
-            <a href="{proj['url']}" target="_blank">View on GitHub &rarr;</a>
-        </div>
-        """)
-
-# ---------- EXPERIENCE ----------
-md('<h2 id="experience" class="section-title">Experience</h2>')
-for job in EXPERIENCE:
-    points_html = "".join(f"<li>{p}</li>" for p in job["points"])
-    md(f"""
-    <div class="card">
-        <h3>{job['title']}</h3>
-        <div class="meta">{job['meta']}</div>
-        <ul>{points_html}</ul>
-    </div>
-    """)
-
-# ---------- CERTIFICATIONS ----------
-md('<h2 id="certifications" class="section-title">Certifications</h2>')
-cert_cols = st.columns(2)
-for i, cert in enumerate(CERTIFICATIONS):
-    with cert_cols[i % 2]:
-        md(f"""
-        <div class="card">
-            <img class="cert-img" src="{cert['img']}" alt="{cert['title']}">
-            <h3>{cert['title']}</h3>
-            <div class="meta">{cert['issuer']}</div>
-        </div>
-        """)
-
-# ---------- CONTACT ----------
-md('<h2 id="connect" class="section-title">Contact</h2>')
-md(f"""
-Let's connect! Reach out via <a href="{LINKEDIN_URL}" target="_blank">LinkedIn</a>,
-check out my work on <a href="{GITHUB_URL}" target="_blank">GitHub</a>,
-or drop me an <a href="mailto:{EMAIL}">email</a>.
-""")
-
-st.markdown("---")
-st.caption("© Omolola Blessing Lawal")
+# --- Section 5: Connect (OFF-WHITE | Bottom Footer) ---
+with st.container(border=True):
+    st.markdown('<div class="theme-offwhite"></div>', unsafe_allow_html=True)
+    st.markdown("<h2 id='connect'>Connect</h2>", unsafe_allow_html=True)
+    conn_cols = st.columns(3)
+    
+    with conn_cols[0]:
+        with st.container(border=True):
+            st.markdown("### Email")
+            st.link_button("Send an Email", f"mailto:{PORTFOLIO_DATA['email']}", use_container_width=True)
+            
+    with conn_cols[1]:
+        with st.container(border=True):
+            st.markdown("### LinkedIn")
+            st.link_button("View Profile", PORTFOLIO_DATA['contact']['linkedin'], use_container_width=True)
+            
+    with conn_cols[2]:
+        with st.container(border=True):
+            st.markdown("### GitHub")
+            st.link_button("View Repos", PORTFOLIO_DATA['contact']['github'], use_container_width=True)
