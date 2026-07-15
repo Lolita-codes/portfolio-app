@@ -1,7 +1,7 @@
 import streamlit as st
 
 # ==========================================
-# 1. PORTFOLIO DATA (Education Removed, 10 Projects Added)
+# 1. PORTFOLIO DATA 
 # ==========================================
 PORTFOLIO_DATA = {
     "name": "Omolola Blessing Lawal",
@@ -113,19 +113,19 @@ st.markdown("""
        BULLETPROOF ALTERNATING COLOR SYSTEM
        ======================================================= */
 
-    /* 1. OFF-WHITE SECTIONS */
-    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-offwhite) {
+    /* 1. OFF-WHITE SECTIONS (Odd Children: 1, 3, 5) */
+    div.block-container > div:first-child > div:first-child > div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(odd) {
         background-color: #f7f7f8 !important;
         border: none !important;
         border-radius: 20px !important;
         padding: 3rem 2rem !important;
         margin-bottom: 2rem !important;
     }
-    /* Black text for Off-White Sections */
-    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-offwhite) * {
+    div.block-container > div:first-child > div:first-child > div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(odd) * {
         color: #111111 !important; 
     }
-    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-offwhite) div[data-testid="stVerticalBlockBorderWrapper"] {
+    /* Inner cards for Off-White Sections */
+    div.block-container > div:first-child > div:first-child > div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(odd) div[data-testid="stVerticalBlockBorderWrapper"] {
         background-color: #ffffff !important;
         border: 1px solid #e0e0e0 !important;
         border-radius: 16px !important;
@@ -134,19 +134,19 @@ st.markdown("""
         box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important;
     }
 
-    /* 2. BLUE SECTIONS */
-    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-blue) {
+    /* 2. BLUE SECTIONS (Even Children: 2, 4) */
+    div.block-container > div:first-child > div:first-child > div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(even) {
         background-color: #0E0E34 !important;
         border: 1px solid rgba(255,255,255,0.1) !important;
         border-radius: 20px !important;
         padding: 3rem 2rem !important;
         margin-bottom: 2rem !important;
     }
-    /* White text for Blue Sections */
-    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-blue) * {
+    div.block-container > div:first-child > div:first-child > div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(even) * {
         color: #ffffff !important;
     }
-    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-blue) div[data-testid="stVerticalBlockBorderWrapper"] {
+    /* Inner cards for Blue Sections */
+    div.block-container > div:first-child > div:first-child > div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(even) div[data-testid="stVerticalBlockBorderWrapper"] {
         background-color: rgba(255,255,255,0.05) !important;
         border: 1px solid rgba(255,255,255,0.1) !important;
         border-radius: 16px !important;
@@ -154,9 +154,39 @@ st.markdown("""
         height: 100% !important;
     }
 
-    /* --- Left Align Experience Section --- */
-    div[data-testid="stVerticalBlockBorderWrapper"]:has(.exp-section) div[data-testid="stVerticalBlockBorderWrapper"] * {
+    /* =======================================================
+       CUSTOM EXPERIENCE CARDS (Left Aligned & Justified)
+       ======================================================= */
+    .exp-card {
+        background-color: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 16px;
+        padding: 2.5rem;
+        margin-bottom: 1.5rem;
+        color: #ffffff !important;
+    }
+    .exp-card h3 {
         text-align: left !important;
+        margin-bottom: 0.5rem !important;
+        font-family: 'Julius Sans One', sans-serif !important;
+    }
+    .exp-card h4 {
+        text-align: left !important;
+        color: #E6B5E8 !important;
+        font-family: 'Lora', serif !important;
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem !important;
+    }
+    .exp-card ul {
+        text-align: justify !important;
+        list-style-position: outside;
+        padding-left: 1.5rem;
+        margin-bottom: 0;
+    }
+    .exp-card li {
+        text-align: justify !important;
+        margin-bottom: 0.8rem;
+        line-height: 1.6;
     }
 
     /* Streamlit Link Button Styling */
@@ -168,12 +198,10 @@ st.markdown("""
         border: none !important;
         transition: opacity 0.3s ease;
     }
-    /* Button inside Off-White sections */
-    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-offwhite) .stLinkButton > a {
+    div.block-container > div:first-child > div:first-child > div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(odd) .stLinkButton > a {
         background-color: #0E0E34 !important; color: #ffffff !important;
     }
-    /* Button inside Blue sections */
-    div[data-testid="stVerticalBlockBorderWrapper"]:has(.theme-blue) .stLinkButton > a {
+    div.block-container > div:first-child > div:first-child > div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(even) .stLinkButton > a {
         background-color: #ffffff !important; color: #0E0E34 !important;
     }
 
@@ -212,7 +240,7 @@ st.markdown("""
 # ==========================================
 # 3. HERO & TOP NAVBAR
 # ==========================================
-st.markdown(f"""<div style="text-align: center; padding-bottom: 3rem; color: white;"><div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4rem; width: 100%;"><div style="font-family: 'Julius Sans One', sans-serif; font-size: 1.8rem; font-weight: bold; color: #ffffff;">My Portfolio</div><div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; justify-content: flex-end;"><a href="#about-me" class="nav-pill">About</a><a href="#technical-skills" class="nav-pill">Skills</a><a href="#experience" class="nav-pill">Experience</a><a href="#projects" class="nav-pill">Projects</a><a href="#certifications" class="nav-pill">Certifications</a><div class="nav-dropdown"><div class="nav-pill" style="cursor: pointer; background-color: #ffffff; color: #0E0E34 !important; padding: 0.6rem 1.5rem;">Connect ▾</div><div class="nav-dropdown-content"><a href="{PORTFOLIO_DATA['contact']['linkedin']}" target="_blank">LinkedIn</a><a href="mailto:{PORTFOLIO_DATA['email']}">Email</a></div></div></div></div><h1 id="about-me" style="font-family: 'Julius Sans One', sans-serif; font-size: 4rem; margin-bottom: 2rem; line-height: 1.2; color: white !important;">{PORTFOLIO_DATA['name']}<br>{PORTFOLIO_DATA['role']}</h1><p style="font-family: 'Lora', serif; font-size: 1.15rem; max-width: 800px; margin: 0 auto; line-height: 1.8; color: #e0e0e0 !important;">{PORTFOLIO_DATA['about']}</p></div>""", unsafe_allow_html=True)
+st.markdown(f"""<div style="text-align: center; padding-bottom: 3rem; color: white;"><div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4rem; width: 100%;"><div style="font-family: 'Julius Sans One', sans-serif; font-size: 1.8rem; font-weight: bold; color: #ffffff;">My Portfolio</div><div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; justify-content: flex-end;"><a href="#about-me" class="nav-pill">About</a><a href="#technical-skills" class="nav-pill">Skills</a><a href="#experience" class="nav-pill">Experience</a><a href="#projects" class="nav-pill">Projects</a><a href="#certifications" class="nav-pill">Certifications</a><div class="nav-dropdown"><div class="nav-pill" style="cursor: pointer;">Connect ▾</div><div class="nav-dropdown-content"><a href="{PORTFOLIO_DATA['contact']['linkedin']}" target="_blank">LinkedIn</a><a href="mailto:{PORTFOLIO_DATA['email']}">Email</a></div></div></div></div><h1 id="about-me" style="font-family: 'Julius Sans One', sans-serif; font-size: 4.5rem; margin-bottom: 2rem; line-height: 1.2; color: white !important;">{PORTFOLIO_DATA['name']}<br>{PORTFOLIO_DATA['role']}</h1><p style="font-family: 'Lora', serif; font-size: 1.15rem; max-width: 800px; margin: 0 auto; line-height: 1.8; color: #e0e0e0 !important;">{PORTFOLIO_DATA['about']}</p></div>""", unsafe_allow_html=True)
 
 # ==========================================
 # 4. MAIN CONTENT
@@ -220,7 +248,6 @@ st.markdown(f"""<div style="text-align: center; padding-bottom: 3rem; color: whi
 
 # --- Section 1: Technical Skills (OFF-WHITE | 3x5 Grid) ---
 with st.container(border=True):
-    st.markdown('<div class="theme-offwhite"></div>', unsafe_allow_html=True)
     st.markdown("<h2 id='technical-skills'>Technical Skills</h2>", unsafe_allow_html=True)
     skills = PORTFOLIO_DATA["skills"]
     for i in range(5):
@@ -235,20 +262,24 @@ with st.container(border=True):
             if i+10 < len(skills):
                 with st.container(border=True): st.markdown(f"#### {skills[i+10]}")
 
-# --- Section 2: Experience (BLUE | Left Aligned) ---
+# --- Section 2: Experience (BLUE | Custom Left-Aligned & Justified HTML) ---
 with st.container(border=True):
-    st.markdown('<div class="theme-blue exp-section"></div>', unsafe_allow_html=True)
     st.markdown("<h2 id='experience'>Experience</h2>", unsafe_allow_html=True)
+    # Using pure HTML inside this container guarantees absolute control over text alignment
+    exp_html = ""
     for job in PORTFOLIO_DATA["experience"]:
-        with st.container(border=True):
-            st.markdown(f"### {job['title']}")
-            st.markdown(f"**{job['company']}** | *{job['date']}*")
-            for point in job["points"]:
-                st.write(f"● {point}")
+        points_list = "".join([f"<li>{point}</li>" for point in job["points"]])
+        exp_html += f"""
+        <div class="exp-card">
+            <h3>{job['title']}</h3>
+            <h4>{job['company']} <span style="color: #cccccc !important; font-weight: normal;">| <em>{job['date']}</em></span></h4>
+            <ul>{points_list}</ul>
+        </div>
+        """
+    st.markdown(exp_html, unsafe_allow_html=True)
 
 # --- Section 3: Projects (OFF-WHITE | 3 Columns) ---
 with st.container(border=True):
-    st.markdown('<div class="theme-offwhite"></div>', unsafe_allow_html=True)
     st.markdown("<h2 id='projects'>Projects</h2>", unsafe_allow_html=True)
     proj_cols = st.columns(3)
     for i, project in enumerate(PORTFOLIO_DATA["projects"]):
@@ -261,7 +292,6 @@ with st.container(border=True):
 
 # --- Section 4: Certifications (BLUE | 3 Columns) ---
 with st.container(border=True):
-    st.markdown('<div class="theme-blue"></div>', unsafe_allow_html=True)
     st.markdown("<h2 id='certifications'>Certifications</h2>", unsafe_allow_html=True)
     cert_cols = st.columns(3)
     for i, cert in enumerate(PORTFOLIO_DATA["certifications"]):
@@ -273,7 +303,6 @@ with st.container(border=True):
 
 # --- Section 5: Connect (OFF-WHITE | Bottom Footer) ---
 with st.container(border=True):
-    st.markdown('<div class="theme-offwhite"></div>', unsafe_allow_html=True)
     st.markdown("<h2 id='connect'>Connect</h2>", unsafe_allow_html=True)
     conn_cols = st.columns(3)
     
