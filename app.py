@@ -79,42 +79,27 @@ PORTFOLIO_DATA = {
 # ==========================================
 st.set_page_config(page_title="Omolola Lawal | Data Scientist", layout="wide", initial_sidebar_state="collapsed")
 
-# We turn Streamlit into a blank edge-to-edge canvas
 css = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Lora:ital,wght@0,400;0,700;1,400&display=swap');
-
-/* Reset Streamlit defaults */
 .stApp { background-color: #0E0E34 !important; }
 header[data-testid="stHeader"], footer { display: none !important; }
 .block-container { padding: 0 !important; max-width: 100% !important; }
-
-/* Section Containers - Controls alternating backgrounds and padding */
 .section-blue { background-color: #0E0E34; color: white; padding: 5rem 2rem; }
 .section-offwhite { background-color: #f7f7f8; color: #111111; padding: 5rem 2rem; }
 .content-wrapper { max-width: 1200px; margin: 0 auto; }
-
-/* Grid Layouts - Forces exactly 3 columns */
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 @media (max-width: 900px) { .grid-3 { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .grid-3 { grid-template-columns: 1fr; } }
-
-/* Cards */
 .card-light { background: white; border: 1px solid #e0e0e0; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: flex; flex-direction: column; transition: transform 0.2s; }
 .card-light:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
 .card-dark { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 2.5rem; display: flex; flex-direction: column; transition: transform 0.2s; }
 .card-dark:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.3); }
-
-/* Typography */
 h1, h2, h3 { font-family: 'Julius Sans One', sans-serif; }
 p, li, span { font-family: 'Lora', serif; }
 .section-title { text-align: center; font-size: 2.5rem; margin-top: 0; margin-bottom: 3rem; }
-
-/* Buttons */
-.btn-blue { background-color: #0E0E34; color: white !important; text-decoration: none; padding: 0.8rem 1.5rem; border-radius: 9999px; text-align: center; font-family: 'Lora', serif; font-weight: bold; margin-top: 1.5rem; }
+.btn-blue { background-color: #0E0E34; color: white !important; text-decoration: none; padding: 0.8rem 1.5rem; border-radius: 9999px; text-align: center; font-family: 'Lora', serif; font-weight: bold; margin-top: 1.5rem; display: inline-block; }
 .btn-blue:hover { opacity: 0.8; }
-
-/* Nav Bar & Dropdown */
 .nav-pill { color: white !important; text-decoration: none; padding: 0.6rem 1.2rem; border-radius: 9999px; font-family: 'Lora', serif; font-weight: bold; font-size: 1rem; transition: background 0.3s; cursor: pointer; }
 .nav-pill:hover { background-color: rgba(255,255,255,0.1); }
 .nav-dropdown { position: relative; display: inline-block; }
@@ -130,104 +115,38 @@ p, li, span { font-family: 'Lora', serif; }
 # ==========================================
 
 # --- Nav & Hero ---
-hero_html = f"""
-<div class="section-blue" style="padding-top: 2rem;">
-    <div class="content-wrapper">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5rem; flex-wrap: wrap; gap: 1rem;">
-            <div style="font-family: 'Julius Sans One', sans-serif; font-size: 1.8rem; font-weight: bold; color: white;">My Portfolio</div>
-            <div style="display: flex; gap: 0.2rem; align-items: center; flex-wrap: wrap;">
-                <a href="#about-me" class="nav-pill">About</a>
-                <a href="#technical-skills" class="nav-pill">Skills</a>
-                <a href="#experience" class="nav-pill">Experience</a>
-                <a href="#projects" class="nav-pill">Projects</a>
-                <a href="#certifications" class="nav-pill">Certifications</a>
-                <div class="nav-dropdown">
-                    <div class="nav-pill">Connect ▾</div>
-                    <div class="nav-dropdown-content">
-                        <a href="{PORTFOLIO_DATA['contact']['linkedin']}" target="_blank">LinkedIn</a>
-                        <a href="mailto:{PORTFOLIO_DATA['email']}">Email</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="about-me" style="text-align: center; padding-bottom: 4rem;">
-            <h1 style="font-size: 4.5rem; margin-top: 0; margin-bottom: 2rem; line-height: 1.2;">{PORTFOLIO_DATA['name']}<br>{PORTFOLIO_DATA['role']}</h1>
-            <p style="font-size: 1.15rem; max-width: 800px; margin: 0 auto; line-height: 1.8; color: #e0e0e0;">{PORTFOLIO_DATA['about']}</p>
-        </div>
-    </div>
-</div>
-"""
+hero_html = f"<div class='section-blue' style='padding-top: 2rem;'><div class='content-wrapper'><div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 5rem; flex-wrap: wrap; gap: 1rem;'><div style='font-family: \"Julius Sans One\", sans-serif; font-size: 1.8rem; font-weight: bold; color: white;'>My Portfolio</div><div style='display: flex; gap: 0.2rem; align-items: center; flex-wrap: wrap;'><a href='#about-me' class='nav-pill'>About</a><a href='#technical-skills' class='nav-pill'>Skills</a><a href='#experience' class='nav-pill'>Experience</a><a href='#projects' class='nav-pill'>Projects</a><a href='#certifications' class='nav-pill'>Certifications</a><div class='nav-dropdown'><div class='nav-pill'>Connect ▾</div><div class='nav-dropdown-content'><a href='{PORTFOLIO_DATA['contact']['linkedin']}' target='_blank'>LinkedIn</a><a href='mailto:{PORTFOLIO_DATA['email']}'>Email</a></div></div></div></div><div id='about-me' style='text-align: center; padding-bottom: 4rem;'><h1 style='font-size: 4.5rem; margin-top: 0; margin-bottom: 2rem; line-height: 1.2;'>{PORTFOLIO_DATA['name']}<br>{PORTFOLIO_DATA['role']}</h1><p style='font-size: 1.15rem; max-width: 800px; margin: 0 auto; line-height: 1.8; color: #e0e0e0;'>{PORTFOLIO_DATA['about']}</p></div></div></div>"
 
 # --- Skills ---
-skills_html = '<div class="section-offwhite" id="technical-skills"><div class="content-wrapper"><h2 class="section-title">Technical Skills</h2><div class="grid-3">'
+skills_html = "<div class='section-offwhite' id='technical-skills'><div class='content-wrapper'><h2 class='section-title'>Technical Skills</h2><div class='grid-3'>"
 for skill in PORTFOLIO_DATA["skills"]:
-    skills_html += f'<div class="card-light"><h3 style="margin:0; text-align:center;">{skill}</h3></div>'
-skills_html += '</div></div></div>'
+    skills_html += f"<div class='card-light'><h3 style='margin:0; text-align:center;'>{skill}</h3></div>"
+skills_html += "</div></div></div>"
 
 # --- Experience ---
-exp_html = '<div class="section-blue" id="experience"><div class="content-wrapper"><h2 class="section-title">Experience</h2><div style="display: flex; flex-direction: column; gap: 1.5rem;">'
+exp_html = "<div class='section-blue' id='experience'><div class='content-wrapper'><h2 class='section-title'>Experience</h2><div style='display: flex; flex-direction: column; gap: 1.5rem;'>"
 for job in PORTFOLIO_DATA["experience"]:
     points = "".join([f"<li style='text-align: justify; margin-bottom: 0.8rem; line-height: 1.6;'>{p}</li>" for p in job["points"]])
-    exp_html += f"""
-    <div class="card-dark" style="color: white;">
-        <h2 style="margin-top: 0; margin-bottom: 0.5rem; text-align: left;">{job['title']}</h2>
-        <h3 style="color: #E6B5E8; margin-bottom: 1.5rem; font-family: 'Lora', serif; text-align: left; font-size: 1.2rem;">{job['company']} <span style="color: #cccccc; font-weight: normal;">| <em>{job['date']}</em></span></h3>
-        <ul style="padding-left: 1.5rem; margin: 0;">{points}</ul>
-    </div>
-    """
-exp_html += '</div></div></div>'
+    exp_html += f"<div class='card-dark' style='color: white;'><h2 style='margin-top: 0; margin-bottom: 0.5rem; text-align: left;'>{job['title']}</h2><h3 style='color: #E6B5E8; margin-bottom: 1.5rem; font-family: \"Lora\", serif; text-align: left; font-size: 1.2rem;'>{job['company']} <span style='color: #cccccc; font-weight: normal;'>| <em>{job['date']}</em></span></h3><ul style='padding-left: 1.5rem; margin: 0;'>{points}</ul></div>"
+exp_html += "</div></div></div>"
 
 # --- Projects ---
-proj_html = '<div class="section-offwhite" id="projects"><div class="content-wrapper"><h2 class="section-title">Projects</h2><div class="grid-3">'
+proj_html = "<div class='section-offwhite' id='projects'><div class='content-wrapper'><h2 class='section-title'>Projects</h2><div class='grid-3'>"
 for p in PORTFOLIO_DATA["projects"]:
-    proj_html += f"""
-    <div class="card-light">
-        <img src="{p['image']}" style="width: 100%; border-radius: 8px; margin-bottom: 1.5rem;">
-        <h2 style="margin-top: 0; text-align: center; font-size: 1.5rem;">{p['name']}</h2>
-        <p style="text-align: center; flex-grow: 1; line-height: 1.6;">{p['desc']}</p>
-        <a href="{p['link']}" target="_blank" class="btn-blue">View on GitHub</a>
-    </div>
-    """
-proj_html += '</div></div></div>'
+    proj_html += f"<div class='card-light'><img src='{p['image']}' style='width: 100%; border-radius: 8px; margin-bottom: 1.5rem;'><h2 style='margin-top: 0; text-align: center; font-size: 1.5rem;'>{p['name']}</h2><p style='text-align: center; flex-grow: 1; line-height: 1.6;'>{p['desc']}</p><a href='{p['link']}' target='_blank' class='btn-blue'>View on GitHub</a></div>"
+proj_html += "</div></div></div>"
 
 # --- Certifications ---
-cert_html = '<div class="section-blue" id="certifications"><div class="content-wrapper"><h2 class="section-title">Certifications</h2><div class="grid-3">'
+cert_html = "<div class='section-blue' id='certifications'><div class='content-wrapper'><h2 class='section-title'>Certifications</h2><div class='grid-3'>"
 for c in PORTFOLIO_DATA["certifications"]:
-    cert_html += f"""
-    <div class="card-dark" style="text-align: center; color: white;">
-        <img src="{c['image']}" style="width: 100%; border-radius: 8px; margin-bottom: 1.5rem;">
-        <h2 style="margin-top: 0; font-size: 1.3rem;">{c['name']}</h2>
-        <p style="margin-bottom: 0; color: #cccccc;">Issuer: {c['issuer']}</p>
-    </div>
-    """
-cert_html += '</div></div></div>'
+    cert_html += f"<div class='card-dark' style='text-align: center; color: white;'><img src='{c['image']}' style='width: 100%; border-radius: 8px; margin-bottom: 1.5rem;'><h2 style='margin-top: 0; font-size: 1.3rem;'>{c['name']}</h2><p style='margin-bottom: 0; color: #cccccc;'>Issuer: {c['issuer']}</p></div>"
+cert_html += "</div></div></div>"
 
 # --- Connect ---
-connect_html = f"""
-<div class="section-offwhite" id="connect">
-    <div class="content-wrapper">
-        <h2 class="section-title">Connect</h2>
-        <div class="grid-3">
-            <div class="card-light" style="align-items: center; justify-content: center; text-align: center; padding: 3rem 2rem;">
-                <h2 style="margin-top: 0;">Email</h2>
-                <a href="mailto:{PORTFOLIO_DATA['email']}" class="btn-blue" style="width: 100%; max-width: 250px;">Send an Email</a>
-            </div>
-            <div class="card-light" style="align-items: center; justify-content: center; text-align: center; padding: 3rem 2rem;">
-                <h2 style="margin-top: 0;">LinkedIn</h2>
-                <a href="{PORTFOLIO_DATA['contact']['linkedin']}" target="_blank" class="btn-blue" style="width: 100%; max-width: 250px;">View Profile</a>
-            </div>
-            <div class="card-light" style="align-items: center; justify-content: center; text-align: center; padding: 3rem 2rem;">
-                <h2 style="margin-top: 0;">GitHub</h2>
-                <a href="{PORTFOLIO_DATA['contact']['github']}" target="_blank" class="btn-blue" style="width: 100%; max-width: 250px;">View Repos</a>
-            </div>
-        </div>
-    </div>
-</div>
-"""
+connect_html = f"<div class='section-offwhite' id='connect'><div class='content-wrapper'><h2 class='section-title'>Connect</h2><div class='grid-3'><div class='card-light' style='align-items: center; justify-content: center; text-align: center; padding: 3rem 2rem;'><h2 style='margin-top: 0;'>Email</h2><a href='mailto:{PORTFOLIO_DATA['email']}' class='btn-blue' style='width: 100%; max-width: 250px;'>Send an Email</a></div><div class='card-light' style='align-items: center; justify-content: center; text-align: center; padding: 3rem 2rem;'><h2 style='margin-top: 0;'>LinkedIn</h2><a href='{PORTFOLIO_DATA['contact']['linkedin']}' target='_blank' class='btn-blue' style='width: 100%; max-width: 250px;'>View Profile</a></div><div class='card-light' style='align-items: center; justify-content: center; text-align: center; padding: 3rem 2rem;'><h2 style='margin-top: 0;'>GitHub</h2><a href='{PORTFOLIO_DATA['contact']['github']}' target='_blank' class='btn-blue' style='width: 100%; max-width: 250px;'>View Repos</a></div></div></div></div>"
 
 # ==========================================
 # 4. RENDER EVERYTHING
 # ==========================================
-# Combine all the HTML strings and render them securely to the page
 full_page = css + hero_html + skills_html + exp_html + proj_html + cert_html + connect_html
 st.markdown(full_page, unsafe_allow_html=True)
